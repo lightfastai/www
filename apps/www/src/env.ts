@@ -1,0 +1,72 @@
+import { createEnv } from "@t3-oss/env-nextjs";
+import { vercel } from "@t3-oss/env-nextjs/presets-zod";
+import { env as emailEnv } from "@vendor/email/env";
+import { env as inngestEnv } from "@vendor/inngest/env";
+import { env as nextEnv } from "@vendor/next/env";
+import { betterstackEnv } from "@vendor/observability/betterstack-env";
+import { sentryEnv } from "@vendor/observability/sentry-env";
+import { env as securityEnv } from "@vendor/security/env";
+import { z } from "zod";
+
+export const env = createEnv({
+  extends: [
+    vercel(),
+    betterstackEnv,
+    sentryEnv,
+    securityEnv,
+    emailEnv,
+    inngestEnv,
+    nextEnv,
+  ],
+  shared: {
+    NODE_ENV: z
+      .enum(["development", "production", "test"])
+      .default("development"),
+  },
+  /**
+   * Specify your server-side environment variables schema here.
+   * This way you can ensure the app isn't built with invalid env vars.
+   */
+  server: {
+    HEALTH_CHECK_AUTH_TOKEN: z.string().min(32).optional(),
+    PORT: z.coerce.number().positive().optional().default(3000),
+    MXBAI_API_KEY: z.string().min(1),
+    MXBAI_STORE_ID: z.string().min(1),
+  },
+
+  /**
+   * Specify your client-side environment variables schema here.
+   * For them to be exposed to the client, prefix them with `NEXT_PUBLIC_`.
+   */
+  client: {
+    NEXT_PUBLIC_VERCEL_ENV: z
+      .enum(["development", "preview", "production"])
+      .default("development"),
+    NEXT_PUBLIC_APP_URL: z.string().url().default("https://lightfast.ai"),
+    NEXT_PUBLIC_WWW_URL: z.string().url().default("https://lightfast.ai"),
+    NEXT_PUBLIC_PLATFORM_URL: z
+      .string()
+      .url()
+      .default("https://lightfast-platform.vercel.app"),
+  },
+  /**
+   * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
+   */
+  experimental__runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_WWW_URL: process.env.NEXT_PUBLIC_WWW_URL,
+    NEXT_PUBLIC_PLATFORM_URL: process.env.NEXT_PUBLIC_PLATFORM_URL,
+  },
+  // Server variables don't need to be in experimental__runtimeEnv
+  skipValidation:
+    !!process.env.SKIP_ENV_VALIDATION ||
+    process.env.npm_lifecycle_event === "lint",
+
+  /**
+   * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
+   * `SOME_VAR=''` will throw an error.
+   */
+  emptyStringAsUndefined: true,
+});

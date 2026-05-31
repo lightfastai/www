@@ -1,0 +1,15 @@
+{
+  "extends": "@repo/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "jsx": "preserve",
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "~/*": ["./src/*"],
+      "fumadocs-mdx:collections/*": ["./.source/*"],
+      "@repo/ui/*": ["../../packages/ui/src/*"]
+    }
+  },
+  "include": [".", "next-env.d.ts", ".next/types/**/*.ts", ".source/**/*"],
+  "exclude": ["node_modules", "vitest.config.ts"]
+}
