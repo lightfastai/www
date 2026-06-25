@@ -7,7 +7,7 @@ import {
   LOGO_VISIBLE_GAP_PITCHES,
   WORDMARK_LOCKUP_VIEWBOX_HEIGHT,
   WORDMARK_LOCKUP_VIEWBOX_Y,
-} from "./logo";
+} from "../components/brand/logo";
 
 describe("logo geometry", () => {
   it("derives the Paper balanced lockup from the dot pitch system", () => {
