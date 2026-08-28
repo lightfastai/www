@@ -1,3 +1,4 @@
+import path from "node:path";
 import { withBetterStack } from "@logtail/next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
@@ -7,7 +8,6 @@ import withVercelToolbar from "@vercel/toolbar/plugins/next";
 import { createMDX } from "fumadocs-mdx/next";
 import merge from "lodash.merge";
 import type { NextConfig } from "next";
-import path from "node:path";
 
 import { env } from "~/env";
 
