@@ -7,6 +7,7 @@ import withVercelToolbar from "@vercel/toolbar/plugins/next";
 import { createMDX } from "fumadocs-mdx/next";
 import merge from "lodash.merge";
 import type { NextConfig } from "next";
+import path from "node:path";
 
 import { env } from "~/env";
 
@@ -39,8 +40,12 @@ const wwwConfig: NextConfig = merge({}, baseConfig, {
     qualities: [10, 40, 75, 100],
   },
 
+  turbopack: {
+    root: path.join(import.meta.dirname, "../.."),
+  },
+
   transpilePackages: [
-    "@repo/ui",
+    "@repo/ui-v2",
     "@vendor/aeo",
     "@vendor/analytics",
     "@vendor/inngest",
@@ -49,6 +54,7 @@ const wwwConfig: NextConfig = merge({}, baseConfig, {
     "@vendor/resend",
     "@vendor/security",
     "@vendor/seo",
+    "@vendor/slack",
   ],
 
   typedRoutes: true,
@@ -78,6 +84,6 @@ const withMDX = createMDX({
 });
 
 export default withMicrofrontends(withMDX(config), {
-  configPath: "../app/microfrontends.json",
+  configPath: "./microfrontends.json",
   debug: process.env.NODE_ENV === "development",
 });

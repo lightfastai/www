@@ -5,11 +5,11 @@
 @source "../app/**/*.{ts,tsx}";
 @source "../content/**/*.mdx";
 @source "../lib/**/*.{ts,tsx}";
-@source "../../../../packages/ui-v2/src/components/brand/logo.tsx";
-@source "../../../../packages/ui-v2/src/components/content/**/*.{ts,tsx}";
-@source "../../../../packages/ui-v2/src/components/ui/button.tsx";
-@source "../../../../packages/ui-v2/src/components/ui/sheet.tsx";
-@source "../../../../packages/ui-v2/src/components/ui/spinner.tsx";
+@source "../../../packages/ui-v2/src/components/brand/logo.tsx";
+@source "../../../packages/ui-v2/src/components/content/**/*.{ts,tsx}";
+@source "../../../packages/ui-v2/src/components/ui/button.tsx";
+@source "../../../packages/ui-v2/src/components/ui/sheet.tsx";
+@source "../../../packages/ui-v2/src/components/ui/spinner.tsx";
 
 .marketing-content-bleed,
 .marketing-content-bleed-wide {
