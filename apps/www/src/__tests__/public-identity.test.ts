@@ -58,3 +58,43 @@ describe("public founder identity", () => {
     );
   });
 });
+
+describe("standalone website wiring", () => {
+  it("scans the repository-local UI implementation for Tailwind classes", () => {
+    const styles = readFileSync(
+      resolve(import.meta.dirname, "../styles/styles.css"),
+      "utf8"
+    );
+
+    expect(styles).toContain(
+      '@source "../../../../packages/ui-v2/src/components/brand/logo.tsx";'
+    );
+    expect(styles).not.toContain('@source "../../../packages/ui-v2/');
+  });
+
+  it("keeps website-owned service routes on the website microfrontend", () => {
+    const config = JSON.parse(
+      readFileSync(
+        resolve(import.meta.dirname, "../../microfrontends.json"),
+        "utf8"
+      )
+    ) as {
+      applications: {
+        "lightfast-www": { routing: Array<{ paths: string[] }> };
+      };
+    };
+    const paths = config.applications["lightfast-www"].routing.flatMap(
+      (route) => route.paths
+    );
+
+    expect(paths).toEqual(
+      expect.arrayContaining([
+        "/api/health",
+        "/health",
+        "/healthz",
+        "/ingest/:path*",
+        "/monitoring",
+      ])
+    );
+  });
+});

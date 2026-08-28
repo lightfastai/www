@@ -1,0 +1,14 @@
+.DS_Store
+.cache/
+.next/
+.source/
+.turbo/
+.vercel/
+node_modules/
+**/.cache/
+**/.next/
+**/.source/
+**/.turbo/
+**/.vercel/
+**/node_modules/
+**/next-env.d.ts

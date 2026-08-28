@@ -1,0 +1,144 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!src/**/__tests__/**",
+        "!src/**/*.test.*",
+        "!src/**/*.spec.*",
+        "!vitest.config.ts"
+      ],
+      "outputs": [
+        ".cache/tsbuildinfo.json",
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**",
+        "!.next/dev/**"
+      ],
+      "env": [
+        "DATABASE_HOST",
+        "DATABASE_PASSWORD",
+        "DATABASE_USERNAME",
+        "NEXT_PUBLIC_*",
+        "SENTRY_*",
+        "VERCEL_ENV"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "//#_inngest": {
+      "cache": false,
+      "persistent": true
+    },
+    "//#_qstash": {
+      "cache": false,
+      "persistent": true
+    },
+    "//#_github_emulator": {
+      "cache": false,
+      "persistent": true
+    },
+    "//#_granola_emulator": {
+      "cache": false,
+      "persistent": true
+    },
+    "//#_linear_emulator": {
+      "cache": false,
+      "persistent": true
+    },
+    "//#_x_emulator": {
+      "cache": false,
+      "persistent": true
+    },
+    "//#check": {
+      "inputs": ["$TURBO_DEFAULT$", "biome.jsonc"],
+      "outputs": []
+    },
+    "//#knip": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "knip.json",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "outputs": []
+    },
+    "transit": {
+      "dependsOn": ["^transit"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!src/**/__tests__/**",
+        "!src/**/*.test.*",
+        "!src/**/*.spec.*",
+        "!vitest.config.ts"
+      ]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "vitest.config.ts", "tsconfig.json"],
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build", "transit"],
+      "outputs": [".cache/tsbuildinfo.json"],
+      "env": []
+    },
+    "clean": {
+      "cache": false
+    },
+    "migrate": {
+      "cache": false
+    },
+    "migrate:generate": {
+      "cache": false
+    },
+    "generate:openapi": {
+      "dependsOn": ["^build"],
+      "outputs": ["openapi.json"]
+    },
+    "studio": {
+      "cache": false,
+      "persistent": true
+    },
+    "ui": {
+      "cache": false,
+      "interactive": true
+    },
+    "eval": {
+      "cache": false,
+      "interactive": true
+    }
+  },
+  "globalEnv": ["CI"],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "SKIP_ENV_VALIDATION",
+    "npm_lifecycle_event",
+    "VERCEL",
+    "VERCEL_URL",
+    "VERCEL_PROJECT_PRODUCTION_URL"
+  ],
+  "boundaries": {
+    "implicitDependencies": ["~"],
+    "tags": {
+      "vendor": {
+        "dependencies": { "deny": ["packages", "data", "api", "app"] }
+      },
+      "internal": {
+        "dependencies": {
+          "deny": ["vendor", "packages", "data", "api", "app", "core"]
+        }
+      },
+      "app": {
+        "dependents": {
+          "deny": ["vendor", "packages", "data", "api", "core", "internal"]
+        }
+      }
+    }
+  }
+}

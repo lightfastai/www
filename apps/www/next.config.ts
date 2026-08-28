@@ -1,3 +1,4 @@
+import path from "node:path";
 import { withBetterStack } from "@logtail/next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
@@ -39,8 +40,12 @@ const wwwConfig: NextConfig = merge({}, baseConfig, {
     qualities: [10, 40, 75, 100],
   },
 
+  turbopack: {
+    root: path.join(import.meta.dirname, "../.."),
+  },
+
   transpilePackages: [
-    "@repo/ui",
+    "@repo/ui-v2",
     "@vendor/aeo",
     "@vendor/analytics",
     "@vendor/inngest",
@@ -49,6 +54,7 @@ const wwwConfig: NextConfig = merge({}, baseConfig, {
     "@vendor/resend",
     "@vendor/security",
     "@vendor/seo",
+    "@vendor/slack",
   ],
 
   typedRoutes: true,
@@ -78,6 +84,6 @@ const withMDX = createMDX({
 });
 
 export default withMicrofrontends(withMDX(config), {
-  configPath: "../app/microfrontends.json",
+  configPath: "./microfrontends.json",
   debug: process.env.NODE_ENV === "development",
 });
