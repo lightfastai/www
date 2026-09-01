@@ -71,30 +71,4 @@ describe("standalone website wiring", () => {
     );
     expect(styles).not.toContain('@source "../../../packages/ui-v2/');
   });
-
-  it("keeps website-owned service routes on the website microfrontend", () => {
-    const config = JSON.parse(
-      readFileSync(
-        resolve(import.meta.dirname, "../../microfrontends.json"),
-        "utf8"
-      )
-    ) as {
-      applications: {
-        "lightfast-www": { routing: Array<{ paths: string[] }> };
-      };
-    };
-    const paths = config.applications["lightfast-www"].routing.flatMap(
-      (route) => route.paths
-    );
-
-    expect(paths).toEqual(
-      expect.arrayContaining([
-        "/api/health",
-        "/health",
-        "/healthz",
-        "/ingest/:path*",
-        "/monitoring",
-      ])
-    );
-  });
 });

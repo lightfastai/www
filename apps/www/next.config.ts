@@ -3,7 +3,6 @@ import { withBetterStack } from "@logtail/next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
 import { baseConfig, sentryOptions } from "@vendor/next/config";
-import { withMicrofrontends } from "@vercel/microfrontends/next/config";
 import withVercelToolbar from "@vercel/toolbar/plugins/next";
 import { createMDX } from "fumadocs-mdx/next";
 import merge from "lodash.merge";
@@ -83,7 +82,4 @@ const withMDX = createMDX({
   configPath: "source.config.ts",
 });
 
-export default withMicrofrontends(withMDX(config), {
-  configPath: "./microfrontends.json",
-  debug: process.env.NODE_ENV === "development",
-});
+export default withMDX(config);
