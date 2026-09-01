@@ -52,6 +52,10 @@ describe("MCP page contract", () => {
     expect(pageSource).toContain("LIGHTFAST_API_URL");
     expect(pageSource).toContain("does not supply a hosted MCP service");
     expect(pageSource).toContain("default API URL");
+    expect(pageSource).toContain("title: pageTitle");
+    expect(pageSource).toContain(
+      ["const pageUrl = `", "$", "{SITE_IDENTITY.baseUrl}/mcp`;"].join("")
+    );
   });
 
   it("links only to the package, source repository, and protocol documentation", () => {

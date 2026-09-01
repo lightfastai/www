@@ -1,6 +1,36 @@
+import type { Metadata } from "next";
+import { SITE_IDENTITY } from "~/lib/site/identity";
 import { marketingLayout } from "../_components/layout-primitives";
 
 export const dynamic = "force-static";
+
+const pageTitle = "@lightfastai/mcp | Lightfast";
+const pageDescription =
+  "Install and configure Lightfast's local stdio Model Context Protocol server.";
+const pageUrl = `${SITE_IDENTITY.baseUrl}/mcp`;
+
+export const metadata: Metadata = {
+  title: pageTitle,
+  description: pageDescription,
+  alternates: { canonical: pageUrl },
+  openGraph: {
+    type: "website",
+    locale: SITE_IDENTITY.locale,
+    url: pageUrl,
+    title: pageTitle,
+    description: pageDescription,
+    siteName: SITE_IDENTITY.name,
+    images: [SITE_IDENTITY.defaultOgImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: SITE_IDENTITY.twitterHandle,
+    creator: SITE_IDENTITY.twitterHandle,
+    title: pageTitle,
+    description: pageDescription,
+    images: [SITE_IDENTITY.defaultOgImage.url],
+  },
+};
 
 const links = [
   {
