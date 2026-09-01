@@ -3,10 +3,6 @@ import "~/styles/styles.css";
 import { cn } from "@repo/ui-v2/lib/utils";
 import { SpeedInsights, VercelAnalytics } from "@vendor/analytics/vercel";
 import { JsonLd } from "@vendor/seo/json-ld";
-import {
-  PrefetchCrossZoneLinks,
-  PrefetchCrossZoneLinksProvider,
-} from "@vercel/microfrontends/next/client";
 
 import localFont from "next/font/local";
 import {
@@ -68,12 +64,9 @@ export default function RootLayout({
         ))}
       </head>
       <body>
-        <PrefetchCrossZoneLinksProvider>
-          {children}
-          <VercelAnalytics />
-          <SpeedInsights />
-          <PrefetchCrossZoneLinks />
-        </PrefetchCrossZoneLinksProvider>
+        {children}
+        <VercelAnalytics />
+        <SpeedInsights />
       </body>
     </html>
   );

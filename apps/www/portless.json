@@ -1,1 +1,1 @@
-{ "name": "www.lightfast" }
+{ "name": "www.lightfast", "script": "dev:app" }

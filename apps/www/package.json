@@ -4,7 +4,10 @@
   "private": true,
   "license": "Apache-2.0",
   "type": "module",
-  "portless": "www.lightfast",
+  "portless": {
+    "name": "www.lightfast",
+    "script": "dev:app"
+  },
   "scripts": {
     "build": "pnpm build:prod",
     "build:dev": "pnpm with-env next build",
@@ -13,12 +16,12 @@
     "search:sync": "mxbai store sync $MXBAI_STORE_ID \"./src/content/**/*.mdx\" --api-key $MXBAI_API_KEY",
     "search:sync:ci": "mxbai store sync $MXBAI_STORE_ID \"./src/content/**/*.mdx\" --api-key $MXBAI_API_KEY -y",
     "clean": "git clean -xdf .cache .clerk .next .turbo .vercel node_modules",
-    "dev": "pnpm with-related-projects pnpm with-env next dev --turbo --port $(microfrontends port)",
+    "dev": "portless",
+    "dev:app": "pnpm with-env next dev",
     "start": "pnpm with-env next start -p 4101",
     "test": "vitest run",
     "typecheck": "pnpm with-env next typegen && tsc --noEmit",
-    "with-env": "dotenv -e ./.vercel/.env.development.local --",
-    "with-related-projects": "NEXT_PUBLIC_APP_URL=$(portless get lightfast) NEXT_PUBLIC_WWW_URL=$(portless get www.lightfast)"
+    "with-env": "dotenv -e ./.vercel/.env.development.local --"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "catalog:",
@@ -39,8 +42,6 @@
     "@vendor/security": "workspace:*",
     "@vendor/seo": "workspace:*",
     "@vendor/slack": "workspace:*",
-    "@vercel/microfrontends": "2.3.2",
-    "@vercel/related-projects": "catalog:",
     "@vercel/toolbar": "^0.2.2",
     "effect": "catalog:",
     "fumadocs-core": "16.6.10",
