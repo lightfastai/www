@@ -148,7 +148,7 @@ export function HalftoneHero() {
               uContrast: 1.5,
               uFg: [0.91, 0.91, 0.89],
               uGooeyness: 0.58,
-              uInvert: 1,
+              uInvert: 0,
               uPixelSize: pixelSize,
               uReveal: 1,
               uWaveAmplitude: 0,
