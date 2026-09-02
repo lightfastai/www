@@ -143,10 +143,10 @@ export function HalftoneHero() {
           });
           displayEffect.set({
             art: {
-              uBg: [0.91, 0.91, 0.89],
+              uBg: [0, 0, 0],
               uBias: 0,
               uContrast: 1.5,
-              uFg: [0.031, 0.031, 0.027],
+              uFg: [0.91, 0.91, 0.89],
               uGooeyness: 0.58,
               uInvert: 1,
               uPixelSize: pixelSize,
