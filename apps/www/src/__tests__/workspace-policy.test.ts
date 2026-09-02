@@ -1,4 +1,5 @@
-import { globSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -19,34 +20,23 @@ interface PackageManifest {
 }
 
 interface DependencyDeclaration {
-  readonly field: (typeof dependencyFields)[number];
   readonly manifestPath: string;
   readonly specifier: string;
 }
 
+interface WorkspaceProject {
+  readonly path: string;
+}
+
 function getManifestPaths(): string[] {
-  const workspaceConfig = readFileSync(
-    resolve(repositoryRoot, "pnpm-workspace.yaml"),
-    "utf8"
-  );
-  const packagesBlock = workspaceConfig.match(
-    /^packages:\n((?: {2}- .+\n)+)/m
-  )?.[1];
+  const projects = JSON.parse(
+    execFileSync("pnpm", ["list", "--recursive", "--depth", "-1", "--json"], {
+      cwd: repositoryRoot,
+      encoding: "utf8",
+    })
+  ) as WorkspaceProject[];
 
-  if (!packagesBlock) {
-    throw new Error("pnpm-workspace.yaml does not declare workspace packages");
-  }
-
-  const workspaceManifestPaths = packagesBlock
-    .trim()
-    .split("\n")
-    .map((line) => line.replace(/^\s*-\s*/, "").replace(/^['"]|['"]$/g, ""))
-    .flatMap((pattern) =>
-      globSync(`${pattern}/package.json`, { cwd: repositoryRoot })
-    )
-    .map((manifestPath) => resolve(repositoryRoot, manifestPath));
-
-  return [resolve(repositoryRoot, "package.json"), ...workspaceManifestPaths];
+  return projects.map((project) => resolve(project.path, "package.json"));
 }
 
 const manifests = getManifestPaths().map((manifestPath) => ({
@@ -64,7 +54,7 @@ function getDeclarations(): Map<string, DependencyDeclaration[]> {
     for (const field of dependencyFields) {
       for (const [name, specifier] of Object.entries(manifest[field] ?? {})) {
         const current = declarations.get(name) ?? [];
-        current.push({ field, manifestPath, specifier });
+        current.push({ manifestPath, specifier });
         declarations.set(name, current);
       }
     }
