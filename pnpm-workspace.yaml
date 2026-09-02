@@ -152,6 +152,8 @@ catalog:
   typescript: ^5.9.2
   vite: ^8.0.16
   vitest: ^4.1.4
+  vgpu: 0.3.1
+  '@webgpu/types': 0.1.69
   xstate: ^5.32.0
   yaml: ^2.8.3
   zod: ^4.3.6
@@ -197,6 +199,7 @@ allowBuilds:
   '@sentry/cli': true
   '@tailwindcss/oxide': true
   '@vercel/speed-insights': true
+  '@vgpu/adapter-node': false
   better-sqlite3: true
   bufferutil: false
   core-js: false
@@ -209,6 +212,7 @@ allowBuilds:
   msw: true
   protobufjs: false
   sharp: false
+  webgpu: false
 
 packageExtensions:
   '@hookform/resolvers':
