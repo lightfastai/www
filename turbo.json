@@ -18,65 +18,11 @@
         "!.next/cache/**",
         "!.next/dev/**"
       ],
-      "env": [
-        "DATABASE_HOST",
-        "DATABASE_PASSWORD",
-        "DATABASE_USERNAME",
-        "NEXT_PUBLIC_*",
-        "SENTRY_*",
-        "VERCEL_ENV"
-      ]
+      "env": ["NEXT_PUBLIC_*", "SENTRY_*", "VERCEL_ENV"]
     },
     "dev": {
       "cache": false,
       "persistent": true
-    },
-    "//#_inngest": {
-      "cache": false,
-      "persistent": true
-    },
-    "//#_qstash": {
-      "cache": false,
-      "persistent": true
-    },
-    "//#_github_emulator": {
-      "cache": false,
-      "persistent": true
-    },
-    "//#_granola_emulator": {
-      "cache": false,
-      "persistent": true
-    },
-    "//#_linear_emulator": {
-      "cache": false,
-      "persistent": true
-    },
-    "//#_x_emulator": {
-      "cache": false,
-      "persistent": true
-    },
-    "//#check": {
-      "inputs": ["$TURBO_DEFAULT$", "biome.jsonc"],
-      "outputs": []
-    },
-    "//#knip": {
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "knip.json",
-        "package.json",
-        "pnpm-lock.yaml"
-      ],
-      "outputs": []
-    },
-    "transit": {
-      "dependsOn": ["^transit"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "!src/**/__tests__/**",
-        "!src/**/*.test.*",
-        "!src/**/*.spec.*",
-        "!vitest.config.ts"
-      ]
     },
     "test": {
       "dependsOn": ["^build"],
@@ -84,32 +30,14 @@
       "outputs": []
     },
     "typecheck": {
-      "dependsOn": ["^build", "transit"],
+      "dependsOn": ["^typecheck"],
       "outputs": [".cache/tsbuildinfo.json"],
       "env": []
     },
     "clean": {
       "cache": false
     },
-    "migrate": {
-      "cache": false
-    },
-    "migrate:generate": {
-      "cache": false
-    },
-    "generate:openapi": {
-      "dependsOn": ["^build"],
-      "outputs": ["openapi.json"]
-    },
-    "studio": {
-      "cache": false,
-      "persistent": true
-    },
     "ui": {
-      "cache": false,
-      "interactive": true
-    },
-    "eval": {
       "cache": false,
       "interactive": true
     }

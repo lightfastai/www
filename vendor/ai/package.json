@@ -8,10 +8,6 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
-    },
-    "./test": {
-      "types": "./src/test.ts",
-      "default": "./src/test.ts"
     }
   },
   "license": "MIT",
@@ -20,9 +16,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "catalog:",
     "ai": "catalog:",
-    "resumable-stream": "catalog:"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

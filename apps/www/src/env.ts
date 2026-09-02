@@ -1,6 +1,5 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { vercel } from "@t3-oss/env-nextjs/presets-zod";
-import { env as inngestEnv } from "@vendor/inngest/env";
 import { env as nextEnv } from "@vendor/next/env";
 import { betterstackEnv } from "@vendor/observability/betterstack-env";
 import { sentryEnv } from "@vendor/observability/sentry-env";
@@ -17,7 +16,6 @@ export const env = createEnv({
     securityEnv,
     slackEnv,
     resendEnv,
-    inngestEnv,
     nextEnv,
   ],
   shared: {
@@ -32,8 +30,6 @@ export const env = createEnv({
   server: {
     HEALTH_CHECK_AUTH_TOKEN: z.string().min(32).optional(),
     PORT: z.coerce.number().positive().optional().default(3000),
-    MXBAI_API_KEY: z.string().min(1),
-    MXBAI_STORE_ID: z.string().min(1),
   },
 
   /**

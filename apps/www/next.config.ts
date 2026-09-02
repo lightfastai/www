@@ -61,7 +61,6 @@ const wwwConfig: NextConfig = merge({}, baseConfig, {
     "@repo/ui-v2",
     "@vendor/aeo",
     "@vendor/analytics",
-    "@vendor/inngest",
     "@vendor/next",
     "@vendor/observability",
     "@vendor/resend",

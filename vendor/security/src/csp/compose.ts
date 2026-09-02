@@ -50,10 +50,10 @@ function mergeDirectives(...directiveArrays: readonly Source[][]): Source[] {
  * ```ts
  * const directives = composeCspDirectives(
  *   createNextjsCspDirectives(),  // scriptSrc: ['self', 'unsafe-inline']
- *   createClerkCspDirectives(),    // scriptSrc: [clerk, cloudflare]
- *   createAnalyticsCspDirectives() // scriptSrc: [vercel-analytics]
+ *   createAnalyticsCspDirectives(), // scriptSrc: [vercel-analytics]
+ *   createSentryCspDirectives()     // connectSrc: [sentry-ingest]
  * );
- * // Result: scriptSrc: ['self', 'unsafe-inline', clerk, cloudflare, vercel-analytics]
+ * // Result: scriptSrc: ['self', 'unsafe-inline', vercel-analytics]
  * ```
  */
 export function composeCspDirectives(
@@ -112,14 +112,11 @@ export function composeCspDirectives(
  * ```ts
  * const options = composeCspOptions(
  *   createNextjsCspDirectives(),    // REPLACES scriptSrc: ['self', 'unsafe-inline']
- *   createClerkCspDirectives(),      // ADDS to scriptSrc: [clerk, cloudflare]
- *                                    // MERGES imgSrc with defaults
  *   createAnalyticsCspDirectives()   // ADDS to scriptSrc: [vercel-analytics]
  *                                    // MERGES connectSrc with defaults
  * );
- * // Final scriptSrc: ['self', 'unsafe-inline', clerk, cloudflare, vercel-analytics] (NO nonce)
- * // Final imgSrc: [...defaults, clerk-images]
- * // Final connectSrc: [...defaults, clerk-api, vercel-analytics]
+ * // Final scriptSrc: ['self', 'unsafe-inline', vercel-analytics] (NO nonce)
+ * // Final connectSrc: [...defaults, vercel-analytics]
  * ```
  */
 export function composeCspOptions(...configs: PartialCspDirectives[]): Options {

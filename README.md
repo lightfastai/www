@@ -18,8 +18,6 @@ The workspace is self-contained. All `@repo/*` and `@vendor/*` imports resolve t
 
 ## History provenance
 
-The initial history was extracted from `lightfastai/lightfast` at source commit `5e1ff6b0d798b31d95d35ca69ca5240400a2074f` with `git-filter-repo`, retaining only `apps/www/` and `packages/ui-v2/`. That source commit maps to filtered commit `4cbeb3539f4f7e12a521d58e973e31644ecd09e9`.
-
-Run `scripts/extract-history.sh <source-repository> <destination-directory>` to reproduce the filtered history from the snapshotted source commit.
+The initial history was extracted from `lightfastai/lightfast` at source commit `5e1ff6b0d798b31d95d35ca69ca5240400a2074f` with `git-filter-repo`, retaining only `apps/www/` and `packages/ui-v2/`. That source commit maps to filtered commit `4cbeb3539f4f7e12a521d58e973e31644ecd09e9`. The one-time extraction tooling was removed after the standalone repository was verified.
 
 The copied `packages/ui-v2` implementation intentionally also remains in `lightfastai/lightfast` for its existing consumers. No shared UI package is published by this repository.

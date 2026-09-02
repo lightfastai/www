@@ -1,11 +1,13 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
 
+const arcjetKey = z.string().min(1).startsWith("ajkey_");
+
 export const env = createEnv({
   clientPrefix: "" as const,
   client: {},
   server: {
-    ARCJET_KEY: z.string().min(1).startsWith("ajkey_"),
+    ARCJET_KEY: process.env.VERCEL ? arcjetKey : arcjetKey.optional(),
     VERCEL_ENV: z
       .enum(["development", "preview", "production"])
       .default("development"),
