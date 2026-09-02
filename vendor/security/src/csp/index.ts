@@ -2,17 +2,17 @@
  * Composable Content Security Policy (CSP) configuration
  *
  * This module provides a composable approach to building CSP configurations.
- * Each service (Clerk, Analytics, Sentry) provides its own CSP directives,
+ * Each integration (Next.js, Analytics, Sentry) provides its own CSP directives,
  * which can be composed together using the `composeCspOptions()` function.
  *
  * @example Basic usage
  * ```ts
- * import { composeCspOptions, createClerkCspDirectives, createAnalyticsCspDirectives } from "@vendor/security/csp";
+ * import { composeCspOptions, createAnalyticsCspDirectives, createSentryCspDirectives } from "@vendor/security/csp";
  * import { securityMiddleware } from "@vendor/security/middleware";
  *
  * const options = composeCspOptions(
- *   createClerkCspDirectives(),
- *   createAnalyticsCspDirectives()
+ *   createAnalyticsCspDirectives(),
+ *   createSentryCspDirectives()
  * );
  *
  * const securityHeaders = securityMiddleware(options);
@@ -26,18 +26,16 @@
  * };
  *
  * const options = composeCspOptions(
- *   createClerkCspDirectives(),
+ *   createNextjsCspDirectives(),
  *   customDirectives
  * );
  * ```
  */
 
 export { createAnalyticsCspDirectives } from "./analytics";
-export { createClerkCspDirectives } from "./clerk";
 export { composeCspDirectives, composeCspOptions } from "./compose";
 export { createNextjsCspDirectives } from "./nextjs";
 export { createSentryCspDirectives } from "./sentry";
-export { createStripeCspDirectives } from "./stripe";
 export type {
   CspDirective,
   CspDirectives,

@@ -1,6 +1,10 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next"
+  ],
   "files": {
     "includes": [
       "**/*",
@@ -22,6 +26,14 @@
       "!**/routeTree.gen.ts"
     ]
   },
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedKeys": "off",
+        "useSortedPackageJson": "off"
+      }
+    }
+  },
   "linter": {
     "rules": {
       "a11y": {
@@ -30,6 +42,7 @@
       "complexity": {
         "noBannedTypes": "off",
         "noExcessiveCognitiveComplexity": "off",
+        "noUselessReturn": "off",
         "noVoid": "off"
       },
       "nursery": {
@@ -37,14 +50,17 @@
       },
       "performance": {
         "noBarrelFile": "off",
+        "noJsxPropsBind": "off",
         "noNamespaceImport": "off",
         "useTopLevelRegex": "off"
       },
       "style": {
         "noExportedImports": "off",
+        "noIncrementDecrement": "off",
         "noNestedTernary": "off",
         "noNonNullAssertion": "off",
         "noParameterProperties": "off",
+        "useDestructuring": "off",
         "useConsistentMemberAccessibility": "off"
       },
       "suspicious": {
@@ -54,6 +70,10 @@
         "noEvolvingTypes": "off",
         "noExplicitAny": "off",
         "noImplicitAnyLet": "off",
+        "noLeakedRender": "off",
+        "noEqualsToNull": "off",
+        "noShadow": "off",
+        "noUnnecessaryConditions": "off",
         "useAwait": "off"
       }
     }

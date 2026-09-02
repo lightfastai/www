@@ -9,14 +9,6 @@
       "types": "./src/env/sentry-env.ts",
       "default": "./src/env/sentry-env.ts"
     },
-    "./sentry-electron-main": {
-      "types": "./src/sentry-electron-main.ts",
-      "default": "./src/sentry-electron-main.ts"
-    },
-    "./sentry-browser": {
-      "types": "./src/sentry-browser.ts",
-      "default": "./src/sentry-browser.ts"
-    },
     "./sentry-nextjs": {
       "types": "./src/sentry-nextjs.ts",
       "default": "./src/sentry-nextjs.ts"
@@ -25,25 +17,9 @@
       "types": "./src/env/betterstack.ts",
       "default": "./src/env/betterstack.ts"
     },
-    "./log/next": {
-      "types": "./src/log/next.ts",
-      "default": "./src/log/next.ts"
-    },
-    "./log/types": {
-      "types": "./src/log/types.ts",
-      "default": "./src/log/types.ts"
-    },
-    "./context": {
-      "types": "./src/context.ts",
-      "default": "./src/context.ts"
-    },
     "./error/next": {
       "types": "./src/error/next.ts",
       "default": "./src/error/next.ts"
-    },
-    "./inngest": {
-      "types": "./src/inngest.ts",
-      "default": "./src/inngest.ts"
     }
   },
   "license": "MIT",
@@ -57,13 +33,8 @@
     "typescript": "catalog:"
   },
   "dependencies": {
-    "@sentry/browser": "catalog:",
-    "@sentry/core": "catalog:",
-    "@sentry/electron": "catalog:",
     "@sentry/nextjs": "catalog:",
     "@t3-oss/env-core": "catalog:",
-    "@vendor/inngest": "workspace:*",
-    "server-only": "^0.0.1",
     "zod": "catalog:"
   }
 }

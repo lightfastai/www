@@ -17,10 +17,6 @@
       "types": "./src/middleware.ts",
       "default": "./src/middleware.ts"
     },
-    "./clerk-nosecone": {
-      "types": "./src/clerk-nosecone.ts",
-      "default": "./src/clerk-nosecone.ts"
-    },
     "./csp": {
       "types": "./src/csp/index.ts",
       "default": "./src/csp/index.ts"
@@ -33,15 +29,14 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "nosecone": "^1.4.0",
+    "nosecone": "^1.11.0",
     "typescript": "catalog:"
   },
   "dependencies": {
-    "@arcjet/decorate": "^1.5.0",
-    "@arcjet/next": "^1.5.0",
-    "@nosecone/next": "^1.4.0",
+    "@arcjet/decorate": "^1.11.0",
+    "@arcjet/next": "^1.11.0",
+    "@nosecone/next": "^1.11.0",
     "@t3-oss/env-core": "catalog:",
-    "@vendor/clerk": "workspace:^",
     "zod": "catalog:"
   }
 }

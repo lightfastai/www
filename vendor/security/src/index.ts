@@ -33,6 +33,10 @@ export const ARCJET_KEY = env.ARCJET_KEY;
  * Apps can extend this with their own rules
  */
 export const createArcjet = (characteristics: string[] = ["ip.src"]) => {
+  if (!env.ARCJET_KEY) {
+    throw new Error("ARCJET_KEY is not configured.");
+  }
+
   return arcjet({
     key: env.ARCJET_KEY,
     characteristics,

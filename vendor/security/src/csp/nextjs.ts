@@ -26,7 +26,8 @@ import type { PartialCspDirectives } from "./types";
  * ```ts
  * const options = composeCspOptions(
  *   createNextjsCspDirectives(),
- *   createClerkCspDirectives(),
+ *   createAnalyticsCspDirectives(),
+ *   createSentryCspDirectives(),
  *   // ... other CSP configs
  * );
  * ```

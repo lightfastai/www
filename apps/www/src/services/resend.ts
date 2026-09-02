@@ -1,5 +1,5 @@
 import { parseError } from "@vendor/observability/error/next";
-import { createResendClient } from "@vendor/resend";
+import { createResendClient, type ResendClient } from "@vendor/resend";
 import type {
   AddContactSegmentOptions,
   CreateContactOptions,
@@ -11,7 +11,17 @@ import { env } from "~/env";
 const RESEND_CONFLICT_STATUS_CODE = 409;
 const RESEND_REQUEST_TIMEOUT = "5 seconds";
 
-const resend = createResendClient(env.RESEND_API_KEY);
+let resend: ResendClient | undefined;
+
+function getResendClient(): ResendClient {
+  const apiKey = env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not configured.");
+  }
+
+  resend ??= createResendClient(apiKey);
+  return resend;
+}
 
 export class ApplicationError extends Data.TaggedError("ApplicationError")<{
   readonly message: string;
@@ -32,7 +42,7 @@ const resendTimeoutError = () =>
 
 export const createContact = (options: CreateContactOptions) =>
   Effect.tryPromise({
-    try: () => resend.contacts.create(options),
+    try: () => getResendClient().contacts.create(options),
     catch: (error) =>
       new ApplicationError({
         message: parseError(error),
@@ -62,7 +72,7 @@ export const createContact = (options: CreateContactOptions) =>
 
 export const updateContact = (options: UpdateContactOptions) =>
   Effect.tryPromise({
-    try: () => resend.contacts.update(options),
+    try: () => getResendClient().contacts.update(options),
     catch: (error) =>
       new ApplicationError({
         message: parseError(error),
@@ -92,7 +102,7 @@ export const updateContact = (options: UpdateContactOptions) =>
 
 export const addContactToSegment = (options: AddContactSegmentOptions) =>
   Effect.tryPromise({
-    try: () => resend.contacts.segments.add(options),
+    try: () => getResendClient().contacts.segments.add(options),
     catch: (error) =>
       new ApplicationError({
         message: parseError(error),

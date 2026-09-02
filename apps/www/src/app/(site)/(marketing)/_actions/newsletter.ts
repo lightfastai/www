@@ -27,26 +27,28 @@ import { notifyNewsletterSignup } from "~/services/slack";
 
 const NEWSLETTER_SEGMENT_ID = "55744eed-18f8-42fa-9d04-36fe6ec71772";
 
-const newsletterArcjet = arcjet({
-  key: ARCJET_KEY,
-  rules: [
-    protectSignup({
-      bots: {
-        allow: [],
-        mode: "LIVE",
-      },
-      email: {
-        deny: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
-        mode: "LIVE",
-      },
-      rateLimit: {
-        interval: "10m",
-        max: 5,
-        mode: "LIVE",
-      },
-    }),
-  ],
-});
+const newsletterArcjet = ARCJET_KEY
+  ? arcjet({
+      key: ARCJET_KEY,
+      rules: [
+        protectSignup({
+          bots: {
+            allow: [],
+            mode: "LIVE",
+          },
+          email: {
+            deny: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
+            mode: "LIVE",
+          },
+          rateLimit: {
+            interval: "10m",
+            max: 5,
+            mode: "LIVE",
+          },
+        }),
+      ],
+    })
+  : undefined;
 
 function getArcjetDeniedMessage(decision: ArcjetDecision): string {
   if (decision.reason.isRateLimit()) {
@@ -99,44 +101,47 @@ export async function subscribeToNewsletter(
 
       const { email } = parsed.data;
 
-      try {
-        const decision = await newsletterArcjet.protect(await arcjetRequest(), {
-          email,
-        });
+      if (newsletterArcjet) {
+        try {
+          const decision = await newsletterArcjet.protect(
+            await arcjetRequest(),
+            { email }
+          );
 
-        if (decision.isDenied()) {
-          logger.warn("Newsletter Arcjet blocked signup", {
-            conclusion: decision.conclusion,
-            decision_id: decision.id,
-            provider: "arcjet",
-            reason_type: decision.reason.type,
-            step: "protect",
-          });
+          if (decision.isDenied()) {
+            logger.warn("Newsletter Arcjet blocked signup", {
+              conclusion: decision.conclusion,
+              decision_id: decision.id,
+              provider: "arcjet",
+              reason_type: decision.reason.type,
+              step: "protect",
+            });
 
-          return {
-            message: getArcjetDeniedMessage(decision),
-            status: "error",
-          };
-        }
+            return {
+              message: getArcjetDeniedMessage(decision),
+              status: "error",
+            };
+          }
 
-        if (decision.isErrored()) {
+          if (decision.isErrored()) {
+            logger.error("Newsletter Arcjet protection failed open", {
+              conclusion: decision.conclusion,
+              decision_id: decision.id,
+              error: parseError(decision.reason),
+              provider: "arcjet",
+              reason_type: decision.reason.type,
+              step: "protect",
+            });
+          }
+        } catch (error) {
+          captureException(error);
+
           logger.error("Newsletter Arcjet protection failed open", {
-            conclusion: decision.conclusion,
-            decision_id: decision.id,
-            error: parseError(decision.reason),
+            error: parseError(error),
             provider: "arcjet",
-            reason_type: decision.reason.type,
             step: "protect",
           });
         }
-      } catch (error) {
-        captureException(error);
-
-        logger.error("Newsletter Arcjet protection failed open", {
-          error: parseError(error),
-          provider: "arcjet",
-          step: "protect",
-        });
       }
 
       return await Effect.runPromise(
