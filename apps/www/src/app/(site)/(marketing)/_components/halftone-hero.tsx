@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import halftoneDisplayShader from "./halftone.wgsl";
 import halftoneFieldShader from "./halftone-field.wgsl";
@@ -192,16 +191,7 @@ export function HalftoneHero() {
   }, []);
 
   return (
-    <div className="relative size-full" data-halftone-status={status}>
-      <Image
-        alt=""
-        className="object-cover"
-        fill
-        preload
-        quality={40}
-        sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 1024px) calc(100vw - 5rem), 48rem"
-        src="/images/marketing/operating-thesis-panel.webp"
-      />
+    <div className="relative size-full bg-black" data-halftone-status={status}>
       <canvas
         className={`absolute inset-0 block size-full transition-opacity duration-300 ${
           status === "ready" ? "opacity-100" : "opacity-0"

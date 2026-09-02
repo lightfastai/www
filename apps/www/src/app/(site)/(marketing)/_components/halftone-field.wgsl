@@ -11,7 +11,7 @@ fn sineWarp(c0: vec2f, amplitude: f32, time: f32) -> vec2f {
 }
 
 @fragment fn main(@location(0) uv: vec2f) -> @location(0) vec4f {
-  let radius = length(sineWarp(2.0 * uv - 1.0, params.amplitude * params.reveal, params.time * 0.27));
+  let radius = length(sineWarp(2.0 * uv - 1.0, params.amplitude * params.reveal, params.time * 0.08));
   var value = 0.0;
   value = mix(value, 0.0, 1.0);
   value = mix(value, 1.0 / 3.0, cos(radius));
