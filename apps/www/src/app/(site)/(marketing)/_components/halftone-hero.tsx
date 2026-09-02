@@ -143,12 +143,12 @@ export function HalftoneHero() {
           });
           displayEffect.set({
             art: {
-              uBg: [0, 0, 0],
+              uBg: [0.91, 0.91, 0.89],
               uBias: 0,
               uContrast: 1.5,
-              uFg: [0.91, 0.91, 0.89],
+              uFg: [0.031, 0.031, 0.027],
               uGooeyness: 0.58,
-              uInvert: 0,
+              uInvert: 1,
               uPixelSize: pixelSize,
               uReveal: 1,
               uWaveAmplitude: 0,
@@ -191,7 +191,10 @@ export function HalftoneHero() {
   }, []);
 
   return (
-    <div className="relative size-full bg-black" data-halftone-status={status}>
+    <div
+      className="relative size-full bg-[#e8e8e3]"
+      data-halftone-status={status}
+    >
       <canvas
         className={`absolute inset-0 block size-full transition-opacity duration-300 ${
           status === "ready" ? "opacity-100" : "opacity-0"
