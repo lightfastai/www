@@ -1,9 +1,9 @@
 import { JsonLd } from "@vendor/seo/json-ld";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { markdownComponents } from "~/app/_components/mdx-components";
 import { getHomePublication } from "~/lib/publishing";
+import { HalftoneHero } from "./_components/halftone-hero";
 import {
   MarketingContentBleed,
   marketingLayout,
@@ -30,15 +30,7 @@ export default function HomePage() {
       <section className={`pb-16 lg:pb-28 ${marketingLayout.pageTop}`}>
         <h1 className="sr-only">{publication.title}</h1>
         <MarketingContentBleed className="aspect-video overflow-hidden rounded-xs bg-muted">
-          <Image
-            alt=""
-            className="object-cover"
-            fill
-            preload
-            quality={40}
-            sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 1024px) calc(100vw - 5rem), 48rem"
-            src="/images/marketing/operating-thesis-panel.webp"
-          />
+          <HalftoneHero />
         </MarketingContentBleed>
       </section>
 

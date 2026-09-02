@@ -41,6 +41,20 @@ const wwwConfig: NextConfig = merge({}, baseConfig, {
 
   turbopack: {
     root: path.join(import.meta.dirname, "../.."),
+    rules: {
+      "*.wgsl": {
+        as: "*.js",
+        loaders: ["@vgpu/wgsl/loader-webpack"],
+      },
+    },
+  },
+
+  webpack(config) {
+    config.module.rules.push({
+      loader: "@vgpu/wgsl/loader-webpack",
+      test: /\.wgsl$/,
+    });
+    return config;
   },
 
   transpilePackages: [
