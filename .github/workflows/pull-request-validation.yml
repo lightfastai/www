@@ -35,4 +35,4 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm build
       - run: pnpm boundaries
-      - run: pnpm audit
+      - run: pnpm audit:prod

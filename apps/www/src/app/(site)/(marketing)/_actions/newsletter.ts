@@ -27,28 +27,42 @@ import { notifyNewsletterSignup } from "~/services/slack";
 
 const NEWSLETTER_SEGMENT_ID = "55744eed-18f8-42fa-9d04-36fe6ec71772";
 
-const newsletterArcjet = ARCJET_KEY
-  ? arcjet({
-      key: ARCJET_KEY,
-      rules: [
-        protectSignup({
-          bots: {
-            allow: [],
-            mode: "LIVE",
-          },
-          email: {
-            deny: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
-            mode: "LIVE",
-          },
-          rateLimit: {
-            interval: "10m",
-            max: 5,
-            mode: "LIVE",
-          },
-        }),
-      ],
-    })
-  : undefined;
+function createNewsletterArcjet(key: string) {
+  return arcjet({
+    key,
+    rules: [
+      protectSignup({
+        bots: {
+          allow: [],
+          mode: "LIVE",
+        },
+        email: {
+          deny: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
+          mode: "LIVE",
+        },
+        rateLimit: {
+          interval: "10m",
+          max: 5,
+          mode: "LIVE",
+        },
+      }),
+    ],
+  });
+}
+
+let newsletterArcjet: ReturnType<typeof createNewsletterArcjet> | undefined;
+
+function getNewsletterArcjet():
+  | ReturnType<typeof createNewsletterArcjet>
+  | undefined {
+  if (!ARCJET_KEY) {
+    return undefined;
+  }
+
+  newsletterArcjet ??= createNewsletterArcjet(ARCJET_KEY);
+
+  return newsletterArcjet;
+}
 
 function getArcjetDeniedMessage(decision: ArcjetDecision): string {
   if (decision.reason.isRateLimit()) {
@@ -101,12 +115,13 @@ export async function subscribeToNewsletter(
 
       const { email } = parsed.data;
 
-      if (newsletterArcjet) {
+      const arcjetClient = getNewsletterArcjet();
+
+      if (arcjetClient) {
         try {
-          const decision = await newsletterArcjet.protect(
-            await arcjetRequest(),
-            { email }
-          );
+          const decision = await arcjetClient.protect(await arcjetRequest(), {
+            email,
+          });
 
           if (decision.isDenied()) {
             logger.warn("Newsletter Arcjet blocked signup", {

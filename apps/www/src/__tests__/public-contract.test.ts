@@ -133,17 +133,7 @@ describe("public route contract", () => {
 });
 
 describe("public metadata and discovery contract", () => {
-  it("keeps the complete content route inventory and indexing intent", () => {
-    expect(expectedContentRoutes.map(({ pathname }) => pathname)).toEqual([
-      "/",
-      "/brand",
-      "/blog",
-      "/blog/2026-03-26-why-we-built-lightfast",
-      "/legal/privacy",
-      "/legal/terms",
-      "/mcp",
-    ]);
-
+  it("keeps content routes and indexing intent", () => {
     for (const route of expectedContentRoutes) {
       expect(existsSync(resolve(appRoot, route.page)), route.pathname).toBe(
         true

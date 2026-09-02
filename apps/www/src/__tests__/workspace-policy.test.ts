@@ -1,9 +1,8 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { globSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../../..");
-const workspaceDirectories = ["apps", "packages", "internal", "vendor"];
 const dependencyFields = [
   "dependencies",
   "devDependencies",
@@ -26,14 +25,26 @@ interface DependencyDeclaration {
 }
 
 function getManifestPaths(): string[] {
-  const workspaceManifestPaths = workspaceDirectories.flatMap((directory) =>
-    readdirSync(resolve(repositoryRoot, directory), { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) =>
-        resolve(repositoryRoot, directory, entry.name, "package.json")
-      )
-      .filter(existsSync)
+  const workspaceConfig = readFileSync(
+    resolve(repositoryRoot, "pnpm-workspace.yaml"),
+    "utf8"
   );
+  const packagesBlock = workspaceConfig.match(
+    /^packages:\n((?: {2}- .+\n)+)/m
+  )?.[1];
+
+  if (!packagesBlock) {
+    throw new Error("pnpm-workspace.yaml does not declare workspace packages");
+  }
+
+  const workspaceManifestPaths = packagesBlock
+    .trim()
+    .split("\n")
+    .map((line) => line.replace(/^\s*-\s*/, "").replace(/^['"]|['"]$/g, ""))
+    .flatMap((pattern) =>
+      globSync(`${pattern}/package.json`, { cwd: repositoryRoot })
+    )
+    .map((manifestPath) => resolve(repositoryRoot, manifestPath));
 
   return [resolve(repositoryRoot, "package.json"), ...workspaceManifestPaths];
 }

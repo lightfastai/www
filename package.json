@@ -9,7 +9,7 @@
   },
   "packageManager": "pnpm@11.1.3",
   "scripts": {
-    "audit": "pnpm audit --prod --audit-level high",
+    "audit:prod": "pnpm audit --prod --audit-level high",
     "boundaries": "turbo boundaries",
     "build": "SKIP_ENV_VALIDATION=true turbo run build -F @lightfast/www",
     "check": "ultracite check",
@@ -17,7 +17,7 @@
     "dev": "SKIP_ENV_VALIDATION=true turbo run dev --filter=@lightfast/www --concurrency=2",
     "test": "SKIP_ENV_VALIDATION=true turbo run test -F @lightfast/www",
     "typecheck": "SKIP_ENV_VALIDATION=true turbo run typecheck",
-    "verify": "pnpm check && pnpm test && pnpm typecheck && pnpm build && pnpm boundaries && pnpm audit"
+    "verify": "pnpm check && pnpm test && pnpm typecheck && pnpm build && pnpm boundaries && pnpm audit:prod"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.11",
