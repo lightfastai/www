@@ -6,6 +6,32 @@ import {
   marketingNavigationLinks,
 } from "../app/(site)/(marketing)/_components/marketing-navigation";
 
+const marketingLayoutSource = readFileSync(
+  resolve(import.meta.dirname, "../app/(site)/(marketing)/layout.tsx"),
+  "utf8"
+);
+const footerSource = readFileSync(
+  resolve(
+    import.meta.dirname,
+    "../app/(site)/(marketing)/_components/footer.tsx"
+  ),
+  "utf8"
+);
+const newsletterSectionSource = readFileSync(
+  resolve(
+    import.meta.dirname,
+    "../app/(site)/(marketing)/_components/newsletter-section.tsx"
+  ),
+  "utf8"
+);
+const checkboxSource = readFileSync(
+  resolve(
+    import.meta.dirname,
+    "../../../../packages/ui-v2/src/components/ui/checkbox.tsx"
+  ),
+  "utf8"
+);
+
 describe("marketing navigation", () => {
   it("keeps the primary information architecture focused", () => {
     expect(marketingNavigationLinks).toEqual([
@@ -21,6 +47,36 @@ describe("marketing navigation", () => {
     expect(isMarketingNavigationLinkCurrent("/brand/preview", "/brand")).toBe(
       false
     );
+  });
+});
+
+describe("marketing chrome structure", () => {
+  it("keeps the newsletter in the foreground and reveals the footer behind it", () => {
+    expect(marketingLayoutSource).toContain(
+      'className="group/company isolate min-h-svh overflow-x-clip bg-background"'
+    );
+    expect(marketingLayoutSource).toContain("<NewsletterSection />");
+    expect(marketingLayoutSource).toMatch(/<\/div>\s*<Footer \/>\s*<\/div>/);
+    expect(footerSource).toContain("sticky bottom-0 z-0 bg-black");
+    expect(footerSource).toContain("px-6 py-8");
+    expect(footerSource).toContain("md:px-8");
+  });
+
+  it("keeps the compact newsletter controls and consent semantics", () => {
+    expect(newsletterSectionSource).toContain('id="newsletter-heading"');
+    expect(newsletterSectionSource).toContain('id="newsletter-email"');
+    expect(newsletterSectionSource).toContain(
+      'aria-describedby="newsletter-consent-copy"'
+    );
+    expect(newsletterSectionSource).toContain('htmlFor="newsletter-consent"');
+    expect(newsletterSectionSource).toContain('id="newsletter-consent"');
+    expect(newsletterSectionSource).toContain('name="consent"');
+    expect(newsletterSectionSource).toContain("required");
+    expect(newsletterSectionSource).toContain("h-8 w-full");
+    expect(checkboxSource).toContain("CheckboxPrimitive.Root");
+    expect(checkboxSource).toContain('data-slot="checkbox"');
+    expect(checkboxSource).toContain("focus-visible:ring-3");
+    expect(checkboxSource).toContain("disabled:cursor-not-allowed");
   });
 });
 

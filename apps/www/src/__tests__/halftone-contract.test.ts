@@ -46,6 +46,18 @@ describe("Halftone hero contract", () => {
     );
   });
 
+  it("keeps the centered Lightfast lockup above active and fallback artwork", () => {
+    expect(componentSource).toContain(
+      'import { Logo } from "@repo/ui-v2/components/brand/logo"'
+    );
+    expect(componentSource).toContain(
+      'className="pointer-events-none absolute inset-0 z-10 grid place-items-center"'
+    );
+    expect(componentSource).toContain(
+      '<Logo className="text-[#e8e8e3] mix-blend-difference" size="lg" />'
+    );
+  });
+
   it("keeps unsupported and failed states on the same image-free fallback", () => {
     expect(componentSource).toContain('setStatus("unsupported")');
     expect(componentSource).toContain('setStatus("failed")');
