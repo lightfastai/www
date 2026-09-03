@@ -24,6 +24,13 @@ const newsletterSectionSource = readFileSync(
   ),
   "utf8"
 );
+const halftoneHeroSource = readFileSync(
+  resolve(
+    import.meta.dirname,
+    "../app/(site)/(marketing)/_components/halftone-hero.tsx"
+  ),
+  "utf8"
+);
 const checkboxSource = readFileSync(
   resolve(
     import.meta.dirname,
@@ -77,6 +84,14 @@ describe("marketing chrome structure", () => {
     expect(checkboxSource).toContain('data-slot="checkbox"');
     expect(checkboxSource).toContain("focus-visible:ring-3");
     expect(checkboxSource).toContain("disabled:cursor-not-allowed");
+  });
+
+  it("keeps the shader lockup centered and fluid at narrow widths", () => {
+    expect(halftoneHeroSource).toContain("HERO_LOGO_MARK_VIEWPORT_WIDTH");
+    expect(halftoneHeroSource).toContain('"--logo-mark-size"');
+    expect(halftoneHeroSource).toContain('"--logo-wordmark-width"');
+    expect(halftoneHeroSource).toContain("max-w-full");
+    expect(halftoneHeroSource).toContain("mix-blend-difference");
   });
 });
 

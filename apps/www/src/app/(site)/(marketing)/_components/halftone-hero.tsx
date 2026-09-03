@@ -1,11 +1,34 @@
 "use client";
 
-import { Logo } from "@repo/ui-v2/components/brand/logo";
-import { useEffect, useRef, useState } from "react";
+import {
+  getLogoMetrics,
+  LOGO_MARK_SIZES,
+  Logo,
+} from "@repo/ui-v2/components/brand/logo";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import halftoneDisplayShader from "./halftone.wgsl";
 import halftoneFieldShader from "./halftone-field.wgsl";
 
 type ArtworkStatus = "loading" | "ready" | "unsupported" | "failed";
+
+const HERO_LOGO_MARK_VIEWPORT_WIDTH = 8;
+const heroLogoMetrics = getLogoMetrics(LOGO_MARK_SIZES.lg);
+const heroLogoMinimumScale = LOGO_MARK_SIZES.sm / LOGO_MARK_SIZES.lg;
+
+const fluidLogoLength = (length: number) => {
+  const minimum = length * heroLogoMinimumScale;
+  const viewportWidth =
+    length * (HERO_LOGO_MARK_VIEWPORT_WIDTH / LOGO_MARK_SIZES.lg);
+
+  return `clamp(${minimum}px, ${viewportWidth}vw, ${length}px)`;
+};
+
+const heroLogoStyle = {
+  "--logo-gap": fluidLogoLength(heroLogoMetrics.gap),
+  "--logo-mark-size": fluidLogoLength(heroLogoMetrics.markSize),
+  "--logo-wordmark-height": fluidLogoLength(heroLogoMetrics.wordmarkHeight),
+  "--logo-wordmark-width": fluidLogoLength(heroLogoMetrics.wordmarkWidth),
+} as CSSProperties;
 
 export function HalftoneHero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -204,7 +227,11 @@ export function HalftoneHero() {
         ref={canvasRef}
       />
       <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center">
-        <Logo className="text-[#e8e8e3] mix-blend-difference" size="lg" />
+        <Logo
+          className="max-w-full text-[#e8e8e3] mix-blend-difference"
+          size="lg"
+          style={heroLogoStyle}
+        />
       </div>
     </div>
   );
