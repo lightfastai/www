@@ -18,7 +18,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-40 border-border/70 border-b bg-background/90 text-foreground backdrop-blur-md supports-[backdrop-filter]:bg-background/75",
+        "fixed inset-x-0 top-0 z-40 bg-background text-foreground",
         marketingLayout.chromeInset,
         marketingLayout.companyShift
       )}
@@ -32,7 +32,7 @@ export function Header() {
           className="shrink-0 rounded-xs text-foreground outline-none transition-colors hover:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/30"
           href="/"
         >
-          <Logo size="xs" />
+          <Logo showWordmark={false} size="sm" />
         </Link>
 
         <div className="flex items-center justify-end gap-4 text-sm leading-none sm:gap-7">

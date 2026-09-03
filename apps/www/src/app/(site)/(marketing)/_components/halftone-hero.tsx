@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@repo/ui-v2/components/brand/logo";
 import { useEffect, useRef, useState } from "react";
 import halftoneDisplayShader from "./halftone.wgsl";
 import halftoneFieldShader from "./halftone-field.wgsl";
@@ -202,6 +203,9 @@ export function HalftoneHero() {
         data-halftone-canvas=""
         ref={canvasRef}
       />
+      <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center">
+        <Logo className="text-[#e8e8e3] mix-blend-difference" size="lg" />
+      </div>
     </div>
   );
 }

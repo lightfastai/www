@@ -1,6 +1,7 @@
 "use client";
 
 import { Spinner } from "@repo/ui-v2/components/ui/spinner";
+import { cn } from "@repo/ui-v2/lib/utils";
 import { type ReactNode, useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import {
@@ -98,13 +99,24 @@ function NewsletterStatusMessage({
   );
 }
 
-export function NewsletterSubmitButton({ children }: { children: ReactNode }) {
+export function NewsletterSubmitButton({
+  children,
+  className,
+  label = "Subscribe",
+}: {
+  children: ReactNode;
+  className?: string;
+  label?: string;
+}) {
   const { pending } = useFormStatus();
 
   return (
     <button
       aria-label={pending ? "Subscribing" : undefined}
-      className="absolute inset-y-0 right-0 flex h-full cursor-pointer items-center gap-2 bg-transparent p-3 text-xs leading-tight transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-muted-foreground"
+      className={cn(
+        "absolute inset-y-0 right-0 flex h-full cursor-pointer items-center gap-2 bg-transparent p-3 text-xs leading-tight transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:text-muted-foreground",
+        className
+      )}
       disabled={pending}
       type="submit"
     >
@@ -112,7 +124,7 @@ export function NewsletterSubmitButton({ children }: { children: ReactNode }) {
         <Spinner />
       ) : (
         <>
-          <span>Subscribe</span>
+          <span>{label}</span>
           {children}
         </>
       )}
