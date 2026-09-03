@@ -11,9 +11,9 @@ import halftoneFieldShader from "./halftone-field.wgsl";
 
 type ArtworkStatus = "loading" | "ready" | "unsupported" | "failed";
 
-const HERO_LOGO_MARK_VIEWPORT_WIDTH = 8;
+const HERO_LOGO_MARK_VIEWPORT_WIDTH = 5;
 const heroLogoMetrics = getLogoMetrics(LOGO_MARK_SIZES.lg);
-const heroLogoMinimumScale = LOGO_MARK_SIZES.sm / LOGO_MARK_SIZES.lg;
+const heroLogoMinimumScale = LOGO_MARK_SIZES.xs / LOGO_MARK_SIZES.lg;
 
 const fluidLogoLength = (length: number) => {
   const minimum = length * heroLogoMinimumScale;

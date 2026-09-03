@@ -87,7 +87,10 @@ describe("marketing chrome structure", () => {
   });
 
   it("keeps the shader lockup centered and fluid at narrow widths", () => {
-    expect(halftoneHeroSource).toContain("HERO_LOGO_MARK_VIEWPORT_WIDTH");
+    expect(halftoneHeroSource).toContain("HERO_LOGO_MARK_VIEWPORT_WIDTH = 5");
+    expect(halftoneHeroSource).toContain(
+      "LOGO_MARK_SIZES.xs / LOGO_MARK_SIZES.lg"
+    );
     expect(halftoneHeroSource).toContain('"--logo-mark-size"');
     expect(halftoneHeroSource).toContain('"--logo-wordmark-width"');
     expect(halftoneHeroSource).toContain("max-w-full");
