@@ -15,6 +15,7 @@ export function Newsletter() {
             strokeWidth={2}
           />
         }
+        statusId="footer-newsletter-status"
       >
         <label className="sr-only" htmlFor="footer-newsletter-email">
           Email address

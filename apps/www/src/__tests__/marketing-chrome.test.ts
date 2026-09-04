@@ -24,6 +24,20 @@ const newsletterSectionSource = readFileSync(
   ),
   "utf8"
 );
+const newsletterFormSource = readFileSync(
+  resolve(
+    import.meta.dirname,
+    "../app/(site)/(marketing)/_components/newsletter-form.tsx"
+  ),
+  "utf8"
+);
+const footerNewsletterSource = readFileSync(
+  resolve(
+    import.meta.dirname,
+    "../app/(site)/(marketing)/_components/newsletter.tsx"
+  ),
+  "utf8"
+);
 const halftoneHeroSource = readFileSync(
   resolve(
     import.meta.dirname,
@@ -69,7 +83,7 @@ describe("marketing chrome structure", () => {
     expect(footerSource).toContain("md:px-8");
   });
 
-  it("keeps the compact newsletter controls and consent semantics", () => {
+  it("keeps deliberate newsletter controls and consent semantics", () => {
     expect(newsletterSectionSource).toContain('id="newsletter-heading"');
     expect(newsletterSectionSource).toContain('id="newsletter-email"');
     expect(newsletterSectionSource).toContain(
@@ -79,11 +93,38 @@ describe("marketing chrome structure", () => {
     expect(newsletterSectionSource).toContain('id="newsletter-consent"');
     expect(newsletterSectionSource).toContain('name="consent"');
     expect(newsletterSectionSource).toContain("required");
-    expect(newsletterSectionSource).toContain("h-8 w-full");
+    expect(newsletterSectionSource).toContain("h-11 w-full");
+    expect(newsletterSectionSource).toContain('variant="section"');
+    expect(newsletterSectionSource).toContain('statusId="newsletter-status"');
     expect(checkboxSource).toContain("CheckboxPrimitive.Root");
     expect(checkboxSource).toContain('data-slot="checkbox"');
     expect(checkboxSource).toContain("focus-visible:ring-3");
     expect(checkboxSource).toContain("disabled:cursor-not-allowed");
+  });
+
+  it("keeps pending and result states announced and recoverable", () => {
+    expect(newsletterFormSource).toContain("aria-busy={isPending}");
+    expect(newsletterFormSource).toContain('aria-live="polite"');
+    expect(newsletterFormSource).toContain('aria-atomic="true"');
+    expect(newsletterFormSource).toContain(
+      'role={isSuccess ? "status" : "alert"}'
+    );
+    expect(newsletterFormSource).toContain("Submitting your email address.");
+    expect(newsletterFormSource).toContain("You're on the list");
+    expect(newsletterFormSource).toContain("We couldn't sign you up");
+    expect(newsletterFormSource).toContain("Use another email");
+    expect(newsletterFormSource).toContain("Try again");
+    expect(newsletterFormSource).toContain("break-words");
+    expect(newsletterFormSource).not.toContain("truncate");
+    expect(newsletterFormSource).toContain("motion-reduce:animate-none");
+  });
+
+  it("keeps the shared footer composition compact", () => {
+    expect(footerNewsletterSource).toContain(
+      'statusId="footer-newsletter-status"'
+    );
+    expect(footerNewsletterSource).toContain("p-3 pr-32 text-xs");
+    expect(footerNewsletterSource).not.toContain('variant="section"');
   });
 
   it("keeps the shader lockup centered and fluid at narrow widths", () => {

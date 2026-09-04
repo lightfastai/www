@@ -31,6 +31,8 @@ export function NewsletterSection() {
                 strokeWidth={2}
               />
             }
+            statusId="newsletter-status"
+            variant="section"
           >
             <div className="w-full">
               <div className="relative flex items-center">
@@ -40,7 +42,7 @@ export function NewsletterSection() {
                 <input
                   aria-describedby="newsletter-consent-copy"
                   autoComplete="email"
-                  className="m-0 h-8 w-full border border-border bg-muted px-3 pr-24 text-xs outline-none transition-colors placeholder:text-muted-foreground hover:border-muted-foreground/50 focus:border-ring disabled:cursor-not-allowed disabled:opacity-70"
+                  className="m-0 h-11 w-full border border-border user-invalid:border-destructive bg-muted px-4 pr-32 text-sm outline-none user-invalid:ring-3 user-invalid:ring-destructive/20 transition-[border-color,box-shadow] placeholder:text-muted-foreground hover:border-muted-foreground/50 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-70"
                   id="newsletter-email"
                   maxLength={256}
                   name="email"
@@ -49,7 +51,7 @@ export function NewsletterSection() {
                   type="email"
                 />
                 <NewsletterSubmitButton
-                  className="px-3 text-xs"
+                  className="px-4 text-sm"
                   label="Sign up"
                 >
                   <HugeiconsIcon
