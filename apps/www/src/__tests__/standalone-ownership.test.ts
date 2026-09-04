@@ -30,7 +30,11 @@ function collectTextFiles(directory: string): string[] {
     (entry: Dirent) => {
       const entryPath = resolve(directory, entry.name);
       if (entry.isDirectory()) {
-        if ([".git", ".next", ".turbo", "node_modules"].includes(entry.name)) {
+        if (
+          [".git", ".next", ".turbo", ".vercel", "node_modules"].includes(
+            entry.name
+          )
+        ) {
           return [];
         }
         return collectTextFiles(entryPath);

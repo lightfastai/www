@@ -1,21 +1,28 @@
 import type { ReactNode } from "react";
+// import { ContactSection } from "./_components/contact-section";
 import { Footer } from "./_components/footer";
+import { Header } from "./_components/header";
 import {
   MarketingContent,
   marketingLayout,
 } from "./_components/layout-primitives";
-import { Sidebar } from "./_components/sidebar";
+import { NewsletterSection } from "./_components/newsletter-section";
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="group/company min-h-svh overflow-x-clip bg-background">
-      <Sidebar />
+    <div
+      className="group/company isolate min-h-svh overflow-x-clip bg-background"
+      id="top"
+    >
+      <Header />
       <div
-        className={`min-h-svh bg-background ${marketingLayout.companyShift}`}
+        className={`relative z-10 min-h-svh bg-background ${marketingLayout.companyShift}`}
       >
         <MarketingContent>{children}</MarketingContent>
-        <Footer />
+        {/* <ContactSection /> */}
+        <NewsletterSection />
       </div>
+      <Footer />
     </div>
   );
 }

@@ -50,7 +50,7 @@ export default function Company() {
       <SheetTrigger
         render={
           <Button
-            className="h-auto cursor-pointer justify-start px-0 py-0 font-normal text-muted-foreground text-sm leading-none transition-colors hover:text-foreground hover:no-underline"
+            className="h-auto cursor-pointer justify-start rounded-none px-0 py-0 font-normal text-muted-foreground text-sm leading-none transition-colors hover:text-foreground hover:no-underline aria-expanded:text-foreground"
             data-company-trigger
             type="button"
             variant="link"

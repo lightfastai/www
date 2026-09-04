@@ -1,141 +1,38 @@
-import { ArrowUp01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Logo } from "@repo/ui-v2/components/brand/logo";
-import { Button } from "@repo/ui-v2/components/ui/button";
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { SITE_IDENTITY } from "~/lib/site/identity";
 import { marketingLayout } from "./layout-primitives";
-import { Newsletter } from "./newsletter";
+
+const legalLinks = [
+  { href: "/legal/terms", label: "Terms of Use" },
+  { href: "/legal/privacy", label: "Privacy Policy" },
+] as const;
 
 export function Footer() {
   return (
-    <footer className="min-h-svh bg-background text-foreground">
-      <div
-        className={`relative flex min-h-svh flex-col justify-between gap-32 pb-8 lg:block ${marketingLayout.pageTop}`}
-      >
-        <div
-          className={`${marketingLayout.contentStartX} lg:absolute lg:inset-x-0 lg:top-24`}
-        >
-          <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
-            <FooterColumn label="Socials">
-              <nav
-                aria-label="Social links"
-                className="flex flex-col items-start gap-2"
-              >
-                {SITE_IDENTITY.socialLinks.map((link) => (
-                  <Button
-                    className="h-auto justify-start px-0 py-0.5 font-normal text-base leading-tight"
-                    key={link.url}
-                    nativeButton={false}
-                    render={
-                      <a
-                        href={link.url}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        {link.label}
-                      </a>
-                    }
-                    variant="link"
-                  />
-                ))}
-                <Button
-                  className="h-auto justify-start px-0 py-0.5 font-normal text-base leading-tight"
-                  nativeButton={false}
-                  render={
-                    <a href={`mailto:${SITE_IDENTITY.contact.email}`}>
-                      Contact
-                    </a>
-                  }
-                  variant="link"
-                />
-              </nav>
-            </FooterColumn>
-
-            <FooterColumn
-              className="sm:col-span-2 lg:col-start-3"
-              label="Newsletter"
-            >
-              <p className="w-full text-base leading-tight">
-                Subscribe to research notes and project updates
-              </p>
-              <Newsletter />
-            </FooterColumn>
-          </div>
-        </div>
-
-        <div
-          className={`flex justify-center lg:absolute lg:inset-x-0 lg:top-1/2 lg:-translate-y-1/2 ${marketingLayout.edgeX}`}
-        >
-          <Logo className="text-foreground" size="md" />
-        </div>
-
-        <div
-          className={`lg:absolute lg:inset-x-0 lg:bottom-8 ${marketingLayout.edgeX}`}
-        >
+    <footer
+      className={`sticky bottom-0 z-0 bg-black text-foreground ${marketingLayout.companyShift}`}
+    >
+      <div className="mx-auto flex min-h-80 w-full max-w-[96rem] flex-col justify-between gap-20 px-6 py-8 sm:min-h-96 md:px-8 lg:min-h-[28rem]">
+        <div className="flex flex-col gap-6 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2026</p>
           <nav
             aria-label="Legal links"
-            className="grid grid-cols-1 gap-3 text-xs leading-tight sm:grid-cols-4 sm:items-center"
+            className="flex flex-wrap items-center gap-x-8 gap-y-3"
           >
-            <p className="py-0.5 sm:justify-self-start">
-              ©2026 {SITE_IDENTITY.name}
-            </p>
-            <div className="sm:justify-self-center">
-              <Link className="block py-0.5 hover:underline" href="/brand">
-                Brand Guidelines
-              </Link>
-            </div>
-            <div className="sm:justify-self-center">
+            {legalLinks.map((link) => (
               <Link
-                className="block py-0.5 hover:underline"
-                href="/legal/terms"
+                className="rounded-xs outline-none transition-colors hover:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/30"
+                href={link.href}
+                key={link.href}
               >
-                Terms of Use
+                {link.label}
               </Link>
-            </div>
-            <div className="flex items-center sm:justify-self-end">
-              <Link
-                className="block py-0.5 hover:underline"
-                href="/legal/privacy"
-              >
-                Privacy Policy
-              </Link>
-              <a
-                className="ml-5 hidden items-center justify-end gap-1 border-background border-b py-0.5 no-underline hover:underline"
-                href="#top"
-              >
-                <span>To top</span>
-                <HugeiconsIcon
-                  aria-hidden="true"
-                  className="size-4"
-                  icon={ArrowUp01Icon}
-                  strokeWidth={2}
-                />
-              </a>
-            </div>
+            ))}
           </nav>
         </div>
+
+        <Logo className="text-foreground" size="sm" />
       </div>
     </footer>
-  );
-}
-
-function FooterColumn({
-  children,
-  className,
-  label,
-}: {
-  children: ReactNode;
-  className?: string;
-  label: string;
-}) {
-  return (
-    <div className={className}>
-      <div className="flex flex-col items-start gap-3">
-        <p className="text-muted-foreground text-xs leading-tight">{label}</p>
-        {children}
-      </div>
-    </div>
   );
 }
