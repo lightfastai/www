@@ -73,19 +73,21 @@ function NewsletterActionForm({
   }
 
   return (
-    <form
-      action={formAction}
-      aria-busy={isPending}
-      aria-describedby={isPending ? `${statusId}-pending` : undefined}
-      className="relative flex items-center"
-    >
-      <fieldset className="contents" disabled={isPending}>
-        {children}
-      </fieldset>
+    <>
+      <form
+        action={formAction}
+        aria-busy={isPending}
+        aria-describedby={isPending ? `${statusId}-pending` : undefined}
+        className="relative flex items-center"
+      >
+        <fieldset className="contents" disabled={isPending}>
+          {children}
+        </fieldset>
+      </form>
       <p aria-live="polite" className="sr-only" id={`${statusId}-pending`}>
         {isPending ? "Submitting your email address." : ""}
       </p>
-    </form>
+    </>
   );
 }
 

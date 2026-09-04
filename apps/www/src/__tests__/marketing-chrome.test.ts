@@ -105,6 +105,7 @@ describe("marketing chrome structure", () => {
   it("keeps pending and result states announced and recoverable", () => {
     expect(newsletterFormSource).toContain("aria-busy={isPending}");
     expect(newsletterFormSource).toContain('aria-live="polite"');
+    expect(newsletterFormSource).toMatch(/<\/form>\s*<p aria-live="polite"/);
     expect(newsletterFormSource).toContain('aria-atomic="true"');
     expect(newsletterFormSource).toContain(
       'role={isSuccess ? "status" : "alert"}'
