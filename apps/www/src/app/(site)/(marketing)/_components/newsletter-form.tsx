@@ -126,9 +126,11 @@ function NewsletterStatusMessage({
             >
               {isSuccess ? "You're on the list" : "We couldn't sign you up"}
             </p>
-            <p className="mt-2 text-pretty text-muted-foreground text-sm leading-relaxed">
-              {state.message}
-            </p>
+            {!isSuccess && (
+              <p className="mt-2 text-pretty text-muted-foreground text-sm leading-relaxed">
+                {state.message}
+              </p>
+            )}
           </div>
           <button
             className="inline-flex min-h-10 shrink-0 cursor-pointer items-center gap-2 text-sm transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-4"

@@ -112,6 +112,7 @@ describe("marketing chrome structure", () => {
     );
     expect(newsletterFormSource).toContain("Submitting your email address.");
     expect(newsletterFormSource).toContain("You're on the list");
+    expect(newsletterFormSource).toContain("{!isSuccess && (");
     expect(newsletterFormSource).toContain("min-h-11 border border-border");
     expect(newsletterFormSource).not.toContain("min-h-30");
     expect(newsletterFormSource).toContain("We couldn't sign you up");
