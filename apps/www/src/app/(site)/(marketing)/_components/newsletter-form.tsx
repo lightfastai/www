@@ -112,11 +112,11 @@ function NewsletterStatusMessage({
       <div
         aria-atomic="true"
         aria-live={isSuccess ? "polite" : "assertive"}
-        className="min-h-30 border border-border bg-muted px-5 py-5 text-left sm:px-6 sm:py-6"
+        className="min-h-11 border border-border bg-muted px-4 py-2 text-left"
         id={statusId}
         role={isSuccess ? "status" : "alert"}
       >
-        <div className="flex min-h-full flex-col items-start justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div className="min-w-0">
             <p
               className={cn(
