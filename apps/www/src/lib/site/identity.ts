@@ -24,7 +24,7 @@ export const SITE_IDENTITY = {
   themeColor: "#09090b",
   organizationId: `${baseUrl}/#organization`,
   websiteId: `${baseUrl}/#website`,
-  logoUrl: `${baseUrl}/android-chrome-512x512.png`,
+  logoUrl: `${baseUrl}/icon-512.png`,
   defaultOgImage: {
     url: `${baseUrl}/opengraph-image`,
     width: 1200,
@@ -33,11 +33,10 @@ export const SITE_IDENTITY = {
   },
   icons: {
     favicon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    favicon32: "/favicon-32x32.png",
-    apple: "/apple-touch-icon.png",
-    android192: "/android-chrome-192x192.png",
-    android512: "/android-chrome-512x512.png",
+    icon: "/icon.svg",
+    apple: "/apple-icon.png",
+    icon192: "/icon-192.png",
+    icon512: "/icon-512.png",
   },
   contact: {
     email: "hello@lightfast.ai",
@@ -180,28 +179,7 @@ export const rootMetadata: Metadata = {
     description: SITE_IDENTITY.ogDescription,
     images: [SITE_IDENTITY.defaultOgImage.url],
   },
-  icons: {
-    icon: SITE_IDENTITY.icons.favicon,
-    shortcut: SITE_IDENTITY.icons.shortcut,
-    apple: SITE_IDENTITY.icons.apple,
-    other: [
-      {
-        rel: "icon",
-        url: SITE_IDENTITY.icons.favicon32,
-        sizes: "32x32",
-      },
-      {
-        rel: "icon",
-        url: SITE_IDENTITY.icons.android192,
-        sizes: "192x192",
-      },
-      {
-        rel: "icon",
-        url: SITE_IDENTITY.icons.android512,
-        sizes: "512x512",
-      },
-    ],
-  },
+  // App Router owns icon link generation via favicon.ico, icon.svg and apple-icon.png.
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
@@ -246,12 +224,12 @@ export function buildSiteManifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
       {
-        src: SITE_IDENTITY.icons.android192,
+        src: SITE_IDENTITY.icons.icon192,
         sizes: "192x192",
         type: "image/png",
       },
       {
-        src: SITE_IDENTITY.icons.android512,
+        src: SITE_IDENTITY.icons.icon512,
         sizes: "512x512",
         type: "image/png",
       },

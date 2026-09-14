@@ -19,7 +19,8 @@
     "start": "pnpm with-env next start -p 4101",
     "test": "vitest run",
     "typecheck": "pnpm with-env next typegen && tsc --noEmit",
-    "with-env": "dotenv -e ./.vercel/.env.development.local --"
+    "with-env": "dotenv -e ./.vercel/.env.development.local --",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "catalog:",
@@ -51,9 +52,13 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@repo/typescript-config": "workspace:*",
     "@repo/vitest-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:tailwind4",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
     "@types/lodash.merge": "^4.6.9",
     "@types/mdx": "^2.0.14",
     "@types/node": "catalog:",
@@ -63,6 +68,7 @@
     "babel-plugin-react-compiler": "catalog:",
     "dotenv-cli": "catalog:",
     "import-in-the-middle": "catalog:",
+    "jsdom": "^30.0.1",
     "postcss": "catalog:tailwind4",
     "require-in-the-middle": "catalog:",
     "tailwindcss": "catalog:tailwind4",

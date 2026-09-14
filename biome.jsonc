@@ -10,20 +10,10 @@
       "**/*",
       "!.agents",
       "!.claude",
-      "!scripts",
-      "!apps/codex-sidebar-demo/.vite",
-      "!apps/codex-sidebar-demo/out",
-      "!apps/storybook/public/mockServiceWorker.js",
-      "!packages/ui/src/components/ui",
-      "!packages/ui/src/hooks",
-      "!packages/ui/src/lib",
       "!packages/ui-v2/src/components/ai-elements",
       "!packages/ui-v2/src/components/ui",
       "!packages/ui-v2/src/hooks",
-      "!packages/ui-v2/src/lib",
-      "!packages/app-api-contract/openapi.json",
-      "!db/app/src/migrations",
-      "!**/routeTree.gen.ts"
+      "!packages/ui-v2/src/lib"
     ]
   },
   "assist": {
@@ -77,5 +67,19 @@
         "useAwait": "off"
       }
     }
-  }
+  },
+  // Canonical generated SVG bytes are checked against brand-assets.json.
+  "overrides": [
+    {
+      "includes": [
+        "apps/www/src/app/icon.svg",
+        "apps/www/public/icon-white.svg",
+        "apps/www/public/logo.svg",
+        "apps/www/public/logo-white.svg"
+      ],
+      "formatter": {
+        "enabled": false
+      }
+    }
+  ]
 }

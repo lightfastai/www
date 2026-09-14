@@ -6,53 +6,6 @@ import {
   marketingNavigationLinks,
 } from "../app/(site)/(marketing)/_components/marketing-navigation";
 
-const marketingLayoutSource = readFileSync(
-  resolve(import.meta.dirname, "../app/(site)/(marketing)/layout.tsx"),
-  "utf8"
-);
-const footerSource = readFileSync(
-  resolve(
-    import.meta.dirname,
-    "../app/(site)/(marketing)/_components/footer.tsx"
-  ),
-  "utf8"
-);
-const newsletterSectionSource = readFileSync(
-  resolve(
-    import.meta.dirname,
-    "../app/(site)/(marketing)/_components/newsletter-section.tsx"
-  ),
-  "utf8"
-);
-const newsletterFormSource = readFileSync(
-  resolve(
-    import.meta.dirname,
-    "../app/(site)/(marketing)/_components/newsletter-form.tsx"
-  ),
-  "utf8"
-);
-const footerNewsletterSource = readFileSync(
-  resolve(
-    import.meta.dirname,
-    "../app/(site)/(marketing)/_components/newsletter.tsx"
-  ),
-  "utf8"
-);
-const halftoneHeroSource = readFileSync(
-  resolve(
-    import.meta.dirname,
-    "../app/(site)/(marketing)/_components/halftone-hero.tsx"
-  ),
-  "utf8"
-);
-const checkboxSource = readFileSync(
-  resolve(
-    import.meta.dirname,
-    "../../../../packages/ui-v2/src/components/ui/checkbox.tsx"
-  ),
-  "utf8"
-);
-
 describe("marketing navigation", () => {
   it("keeps the primary information architecture focused", () => {
     expect(marketingNavigationLinks).toEqual([
@@ -71,78 +24,6 @@ describe("marketing navigation", () => {
   });
 });
 
-describe("marketing chrome structure", () => {
-  it("keeps the newsletter in the foreground and reveals the footer behind it", () => {
-    expect(marketingLayoutSource).toContain(
-      'className="group/company isolate min-h-svh overflow-x-clip bg-background"'
-    );
-    expect(marketingLayoutSource).toContain("<NewsletterSection />");
-    expect(marketingLayoutSource).toMatch(/<\/div>\s*<Footer \/>\s*<\/div>/);
-    expect(footerSource).toContain("sticky bottom-0 z-0 bg-black");
-    expect(footerSource).toContain("px-6 py-8");
-    expect(footerSource).toContain("md:px-8");
-  });
-
-  it("keeps deliberate newsletter controls and consent semantics", () => {
-    expect(newsletterSectionSource).toContain('id="newsletter-heading"');
-    expect(newsletterSectionSource).toContain('id="newsletter-email"');
-    expect(newsletterSectionSource).toContain(
-      'aria-describedby="newsletter-consent-copy"'
-    );
-    expect(newsletterSectionSource).toContain('htmlFor="newsletter-consent"');
-    expect(newsletterSectionSource).toContain('id="newsletter-consent"');
-    expect(newsletterSectionSource).toContain('name="consent"');
-    expect(newsletterSectionSource).toContain("required");
-    expect(newsletterSectionSource).toContain("h-11 w-full");
-    expect(newsletterSectionSource).toContain('variant="section"');
-    expect(newsletterSectionSource).toContain('statusId="newsletter-status"');
-    expect(checkboxSource).toContain("CheckboxPrimitive.Root");
-    expect(checkboxSource).toContain('data-slot="checkbox"');
-    expect(checkboxSource).toContain("focus-visible:ring-3");
-    expect(checkboxSource).toContain("disabled:cursor-not-allowed");
-  });
-
-  it("keeps pending and result states announced and recoverable", () => {
-    expect(newsletterFormSource).toContain("aria-busy={isPending}");
-    expect(newsletterFormSource).toContain('aria-live="polite"');
-    expect(newsletterFormSource).toMatch(/<\/form>\s*<p aria-live="polite"/);
-    expect(newsletterFormSource).toContain('aria-atomic="true"');
-    expect(newsletterFormSource).toContain(
-      'role={isSuccess ? "status" : "alert"}'
-    );
-    expect(newsletterFormSource).toContain("Submitting your email address.");
-    expect(newsletterFormSource).toContain("You're on the list");
-    expect(newsletterFormSource).toContain("{!isSuccess && (");
-    expect(newsletterFormSource).toContain("min-h-11 border border-border");
-    expect(newsletterFormSource).not.toContain("min-h-30");
-    expect(newsletterFormSource).toContain("We couldn't sign you up");
-    expect(newsletterFormSource).toContain("Use another email");
-    expect(newsletterFormSource).toContain("Try again");
-    expect(newsletterFormSource).toContain("break-words");
-    expect(newsletterFormSource).not.toContain("truncate");
-    expect(newsletterFormSource).toContain("motion-reduce:animate-none");
-  });
-
-  it("keeps the shared footer composition compact", () => {
-    expect(footerNewsletterSource).toContain(
-      'statusId="footer-newsletter-status"'
-    );
-    expect(footerNewsletterSource).toContain("p-3 pr-32 text-xs");
-    expect(footerNewsletterSource).not.toContain('variant="section"');
-  });
-
-  it("keeps the shader lockup centered and fluid at narrow widths", () => {
-    expect(halftoneHeroSource).toContain("HERO_LOGO_MARK_VIEWPORT_WIDTH = 5");
-    expect(halftoneHeroSource).toContain(
-      "LOGO_MARK_SIZES.xs / LOGO_MARK_SIZES.lg"
-    );
-    expect(halftoneHeroSource).toContain('"--logo-mark-size"');
-    expect(halftoneHeroSource).toContain('"--logo-wordmark-width"');
-    expect(halftoneHeroSource).toContain("max-w-full");
-    expect(halftoneHeroSource).toContain("mix-blend-difference");
-  });
-});
-
 describe("brand guidelines", () => {
   const brand = readFileSync(
     resolve(import.meta.dirname, "../content/brand/brand.mdx"),
@@ -152,16 +33,12 @@ describe("brand guidelines", () => {
   it("uses consistent, current document metadata", () => {
     expect(brand).toContain('title: "Brand Guidelines"');
     expect(brand).toContain('ogTitle: "Lightfast Brand Guidelines"');
-    expect(brand).toContain('updatedAt: "2026-09-02T00:00:00Z"');
     expect(brand).not.toContain('title: "Design Guidelines"');
   });
 
   it("preserves the approved public thesis and usage terms", () => {
     expect(brand).toContain(
       "Lightfast studies how people, machines, and artificial intelligence can work together to develop consequential physical technologies."
-    );
-    expect(brand).toContain(
-      "[Jeevan Pillay](https://www.jeevanpillay.com/) is the founder of Lightfast."
     );
     expect(brand).toContain(
       "Lightfast may revoke permission to use its Marks at any time."

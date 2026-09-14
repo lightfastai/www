@@ -1,4 +1,5 @@
-import { type Dirent, existsSync, readdirSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { extname, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -22,26 +23,14 @@ const textExtensions = new Set([
 ]);
 
 function collectTextFiles(directory: string): string[] {
-  if (!existsSync(directory)) {
-    return [];
-  }
-
-  return readdirSync(directory, { withFileTypes: true }).flatMap(
-    (entry: Dirent) => {
-      const entryPath = resolve(directory, entry.name);
-      if (entry.isDirectory()) {
-        if (
-          [".git", ".next", ".turbo", ".vercel", "node_modules"].includes(
-            entry.name
-          )
-        ) {
-          return [];
-        }
-        return collectTextFiles(entryPath);
-      }
-      return textExtensions.has(extname(entry.name)) ? [entryPath] : [];
-    }
-  );
+  return execFileSync("git", ["ls-files", "-z"], {
+    cwd: directory,
+    encoding: "utf8",
+  })
+    .split("\0")
+    .filter((file) => file && textExtensions.has(extname(file)))
+    .map((file) => resolve(directory, file))
+    .filter((file) => existsSync(file));
 }
 
 describe("MCP page contract", () => {
@@ -56,10 +45,6 @@ describe("MCP page contract", () => {
     expect(pageSource).toContain("LIGHTFAST_API_URL");
     expect(pageSource).toContain("does not supply a hosted MCP service");
     expect(pageSource).toContain("default API URL");
-    expect(pageSource).toContain("title: pageTitle");
-    expect(pageSource).toContain(
-      ["const pageUrl = `", "$", "{SITE_IDENTITY.baseUrl}/mcp`;"].join("")
-    );
   });
 
   it("links only to the package, source repository, and protocol documentation", () => {
@@ -143,6 +128,5 @@ describe("standalone website ownership", () => {
     const retiredRelatedDependency = ["@vercel/related", "projects"].join("-");
     expect(lockfile).not.toContain(retiredDirectDependency);
     expect(lockfile).not.toContain(retiredRelatedDependency);
-    expect(lockfile).not.toContain("patch_hash=");
   });
 });

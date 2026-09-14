@@ -12,9 +12,13 @@ pnpm dev
 pnpm test
 pnpm typecheck
 pnpm build
+pnpm --filter @lightfast/www exec playwright install chromium
+pnpm test:e2e
 ```
 
 The workspace is self-contained. All `@repo/*` and `@vendor/*` imports resolve to packages in this repository; it has no filesystem or workspace dependency on `lightfastai/lightfast`.
+
+See [TESTING.md](TESTING.md) for test isolation, coverage and asset provenance.
 
 ## History provenance
 

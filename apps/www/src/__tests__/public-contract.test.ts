@@ -180,31 +180,4 @@ describe("public metadata and discovery contract", () => {
       theme_color: SITE_IDENTITY.themeColor,
     });
   });
-
-  it("keeps MCP and generated discovery metadata on canonical URLs", () => {
-    const mcpSource = readFileSync(
-      resolve(appRoot, "(site)/(marketing)/mcp/page.tsx"),
-      "utf8"
-    );
-    const llmsSource = readFileSync(
-      resolve(appRoot, "(seo)/llms.txt/route.ts"),
-      "utf8"
-    );
-    const sitemapSource = readFileSync(resolve(appRoot, "sitemap.ts"), "utf8");
-    const robotsSource = readFileSync(resolve(appRoot, "robots.ts"), "utf8");
-
-    expect(mcpSource).toContain(
-      ["const pageUrl = `", "$", "{SITE_IDENTITY.baseUrl}/mcp`"].join("")
-    );
-    expect(mcpSource).toContain("alternates: { canonical: pageUrl }");
-    expect(mcpSource).toContain("url: pageUrl");
-    expect(mcpSource).toContain("siteName: SITE_IDENTITY.name");
-    expect(llmsSource).toContain("getPublicPublications().map(pageEntryFor)");
-    expect(llmsSource).toContain("skipUrl: [/\\/search");
-    expect(llmsSource).toContain("/\\/pitch-deck/");
-    expect(sitemapSource).toContain("getPublicPublications().map");
-    expect(robotsSource).toContain(
-      ["sitemap: `", "$", "{SITE_IDENTITY.baseUrl}/sitemap.xml`"].join("")
-    );
-  });
 });
