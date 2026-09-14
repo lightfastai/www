@@ -1,0 +1,72 @@
+{
+  "sourceCommit": "f86b8a9bea6a22ab7df1379d2bb87502906b9a6c",
+  "sourceTreeDirty": false,
+  "source": "packages/ui/src/components/brand/logo.tsx",
+  "geometry": {
+    "symbolSha256": "f00f968331906832f014c3b9ba36876eb657193b10e10515e38146b7f1256afc",
+    "wordmarkSha256": "658cce5ad90d4e4e53341a8745d21bb3c359022c5e5d27f522dda3b0b2029d08",
+    "clearspace": "3L (36 units around an 80-unit mark)"
+  },
+  "files": [
+    {
+      "source": "apps/remotion/out/brand-assets/icon-16.png",
+      "path": "apps/www/public/icon-16.png",
+      "sha256": "ff1c0bd8357e4847ffb68e10f0ca8e79b3437d85ccc5aecfcbe95a1b847d478c"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/icon-32.png",
+      "path": "apps/www/public/icon-32.png",
+      "sha256": "c35c9dfe05eef90e401413dc9cafe6f20e124407240382ddaddaa5eef5f2591b"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/icon-48.png",
+      "path": "apps/www/public/icon-48.png",
+      "sha256": "6c3c5438a398372c67406c94d2238da636c2a6b6ad7387cdd8ee08db9c7d8015"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/apple-icon.png",
+      "path": "apps/www/src/app/apple-icon.png",
+      "sha256": "0fdaeff4e85fac7f0466ad4c4d3c952ce820e0555b306b2aa5a532b67b625765"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/icon-192.png",
+      "path": "apps/www/public/icon-192.png",
+      "sha256": "7f8718ed98cc8b8df25ede5fbe4b61727c62e77b2d3ae1a27d5af153dd070aff"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/icon-512.png",
+      "path": "apps/www/public/icon-512.png",
+      "sha256": "2803268f53e3096375cd996461f6c5f0c44c007d0d8bc49627a7f1aa4e9d203c"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/icon-1024.png",
+      "path": "apps/www/public/icon-1024.png",
+      "sha256": "171abe8332e49c886951e1185185540656802e11dbc0d1e4cf82deb41b0fbaf7"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/icon.svg",
+      "path": "apps/www/src/app/icon.svg",
+      "sha256": "a374fa82183efcd3088f28889354900e64dcc4d6aa870e509e08def00316b746"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/icon-white.svg",
+      "path": "apps/www/public/icon-white.svg",
+      "sha256": "a742eca1d95d53f5c22981131324b692d2c12e906a266ed95183a0fea0d3eda9"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/logo.svg",
+      "path": "apps/www/public/logo.svg",
+      "sha256": "b5e65c8e6bc380bb94c3488ae98dfb37387737a036196850ad1fa8d7041b872e"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/logo-white.svg",
+      "path": "apps/www/public/logo-white.svg",
+      "sha256": "1af93a86f7863e30cfa3a0f1c2fc1f157aa5159d3e86fc1f1bf557ca5d6f2b4d"
+    },
+    {
+      "source": "apps/remotion/out/brand-assets/favicon.ico",
+      "path": "apps/www/src/app/favicon.ico",
+      "sha256": "5507d12ba21c91cf6301d63c77d56c586f5602697e75b7167997423f25b38b9a"
+    }
+  ]
+}

@@ -26,8 +26,8 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "vitest.config.ts", "tsconfig.json"],
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "typecheck": {
       "dependsOn": ["^typecheck"],
@@ -55,7 +55,9 @@
     "implicitDependencies": ["~"],
     "tags": {
       "vendor": {
-        "dependencies": { "deny": ["packages", "data", "api", "app"] }
+        "dependencies": {
+          "deny": ["packages", "data", "api", "app"]
+        }
       },
       "internal": {
         "dependencies": {

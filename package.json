@@ -17,7 +17,8 @@
     "dev": "SKIP_ENV_VALIDATION=true turbo run dev --filter=@lightfast/www --concurrency=2",
     "test": "SKIP_ENV_VALIDATION=true turbo run test -F @lightfast/www",
     "typecheck": "SKIP_ENV_VALIDATION=true turbo run typecheck",
-    "verify": "pnpm check && pnpm test && pnpm typecheck && pnpm build && pnpm boundaries && pnpm audit:prod"
+    "verify": "pnpm check && pnpm test && pnpm typecheck && pnpm build && pnpm test:e2e && pnpm boundaries && pnpm audit:prod",
+    "test:e2e": "pnpm --filter @lightfast/www test:e2e"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.11",
