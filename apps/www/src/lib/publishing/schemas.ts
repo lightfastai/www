@@ -72,6 +72,7 @@ export const BlogPostSchema = ContentPublicationSchema.extend({
   tldr: z.string().min(20).max(300),
   toc: z.array(TocItemSchema).default([]),
   howToSteps: z.array(HowToStepSchema).min(2).optional(),
+  draft: z.boolean().default(false),
 });
 
 export const HomePageSchema = BasePublicationSchema.extend({
