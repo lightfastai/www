@@ -6,8 +6,10 @@ import { getHomePublication } from "~/lib/publishing";
 import { HalftoneHero } from "./_components/halftone-hero";
 import {
   MarketingContentBleed,
+  MarketingContentBleedFull,
   marketingLayout,
 } from "./_components/layout-primitives";
+import { NewsletterSection } from "./_components/newsletter-section";
 
 export const dynamic = "force-static";
 
@@ -37,6 +39,10 @@ export default function HomePage() {
       <article className="pb-24 md:pb-32">
         <MDXContent components={markdownComponents} />
       </article>
+
+      <MarketingContentBleedFull>
+        <NewsletterSection />
+      </MarketingContentBleedFull>
     </main>
   );
 }

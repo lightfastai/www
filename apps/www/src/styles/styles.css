@@ -47,6 +47,13 @@
   }
 }
 
+.marketing-content-bleed-full {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+}
+
 .blog-article-bleed {
   position: relative;
   left: 50%;
