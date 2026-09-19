@@ -129,9 +129,13 @@ for (const width of [375, 1440]) {
     });
     await expect(page.locator("footer")).toHaveCSS("position", "sticky");
     await expect(page.locator("footer")).toHaveCSS("bottom", "0px");
-    const foreground = section.locator("..");
+    // The newsletter section now renders inside the home page's own content,
+    // escaping the shared max-width container via a full-width bleed wrapper,
+    // so the shared layout stacking context is asserted directly rather than
+    // through the section's now-unrelated immediate parent.
+    const layoutStackingContext = page.locator("#top > div.z-10");
     expect(
-      await foreground.evaluate((element) =>
+      await layoutStackingContext.evaluate((element) =>
         Number(getComputedStyle(element).zIndex)
       )
     ).toBeGreaterThan(0);

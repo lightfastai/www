@@ -2,12 +2,15 @@ import { JsonLd } from "@vendor/seo/json-ld";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { markdownComponents } from "~/app/_components/mdx-components";
 import {
   getBlogPostPublication,
   getBlogPostStaticParams,
 } from "~/lib/publishing";
-import { marketingLayout } from "../../_components/layout-primitives";
+import {
+  MarketingContentBleed,
+  marketingLayout,
+} from "../../_components/layout-primitives";
+import { blogMarkdownComponents } from "./_components/blog-markdown-components";
 import { Toc } from "./_components/toc";
 
 export const dynamic = "force-static";
@@ -33,73 +36,70 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const MDXContent = publication.body;
-  const { answerSummary, description, featuredImage, tldr, title } =
+  const { answerSummary, description, featuredImage, tldr, title, toc } =
     publication;
 
   return (
     <main className="bg-background text-foreground">
       <JsonLd code={publication.jsonLd} />
 
-      <section className={`pb-12 md:pb-16 ${marketingLayout.pageTop}`}>
-        <div className="space-y-16">
-          <div className="space-y-4">
-            <h1 className="font-medium font-title text-3xl text-foreground tracking-normal lg:text-4xl">
-              {title}
-            </h1>
-            {description && (
-              <p className="text-foreground text-md leading-relaxed">
-                {description}
-              </p>
-            )}
-          </div>
-
-          {featuredImage && (
-            <div className="w-full">
-              <div className="relative aspect-video overflow-hidden rounded-lg bg-card">
-                <Image
-                  alt={title}
-                  className="h-full w-full object-cover"
-                  fetchPriority="high"
-                  fill
-                  preload
-                  quality={40}
-                  sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 1024px) calc(100vw - 5rem), 1440px"
-                  src={featuredImage}
-                />
-              </div>
-            </div>
-          )}
-
-          {tldr && (
-            <div className="w-full rounded-xs border bg-background p-8">
-              <h2 className="mb-4 font-mono font-semibold text-muted-foreground text-xs uppercase tracking-widest">
-                TL;DR
-              </h2>
-              <p className="text-foreground text-sm leading-relaxed">{tldr}</p>
-            </div>
-          )}
-        </div>
+      <section
+        className={`flex flex-col items-center pb-16 text-center ${marketingLayout.pageTop}`}
+      >
+        <h1 className="font-medium font-title text-3xl text-foreground tracking-normal lg:text-4xl">
+          {title}
+        </h1>
+        {description && (
+          <p className="mt-10 max-w-2xl text-[17px] text-muted-foreground leading-7 tracking-normal">
+            {description}
+          </p>
+        )}
       </section>
 
-      <section className="pt-12 pb-24 md:pb-32">
-        <div className="grid grid-cols-1 gap-y-14 lg:grid-cols-12 lg:gap-x-6">
-          <aside className="hidden lg:col-span-4 lg:block">
-            <Toc items={publication.toc} />
-          </aside>
+      {featuredImage && (
+        <section>
+          <MarketingContentBleed className="aspect-video overflow-hidden rounded-xs bg-foreground">
+            <Image
+              alt={title}
+              className="object-cover"
+              fill
+              preload
+              quality={40}
+              sizes="(max-width: 640px) calc(100vw - 3rem), (max-width: 1024px) calc(100vw - 5rem), 48rem"
+              src={featuredImage}
+            />
+          </MarketingContentBleed>
+        </section>
+      )}
 
-          <article className="max-w-none lg:col-span-7 lg:col-start-5">
-            {answerSummary ? (
-              <aside className="mb-10 border-border border-l pl-5">
-                <h2 className="font-medium text-foreground text-sm">
-                  Quick answer
-                </h2>
-                <p className="mt-3 text-muted-foreground text-sm leading-6">
-                  {answerSummary}
-                </p>
-              </aside>
-            ) : null}
-            <MDXContent components={markdownComponents} />
-          </article>
+      <section className="py-16 md:py-24">
+        <div className={marketingLayout.articleBleed}>
+          {tldr && (
+            <div className="mx-auto mb-14 max-w-[42rem] border-border border-l pl-5">
+              <h2 className="font-medium text-foreground text-sm">TL;DR</h2>
+              <p className="mt-3 text-muted-foreground text-sm leading-6">
+                {tldr}
+              </p>
+            </div>
+          )}
+
+          <div className="relative mx-auto w-full max-w-[42rem]">
+            <Toc items={toc} />
+
+            <article className="max-w-none">
+              {answerSummary ? (
+                <aside className="mb-10 border-border border-l pl-5">
+                  <h2 className="font-medium text-foreground text-sm">
+                    Quick answer
+                  </h2>
+                  <p className="mt-3 text-muted-foreground text-sm leading-6">
+                    {answerSummary}
+                  </p>
+                </aside>
+              ) : null}
+              <MDXContent components={blogMarkdownComponents} />
+            </article>
+          </div>
         </div>
       </section>
     </main>

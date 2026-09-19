@@ -6,7 +6,6 @@ import {
   MarketingContent,
   marketingLayout,
 } from "./_components/layout-primitives";
-import { NewsletterSection } from "./_components/newsletter-section";
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
@@ -20,7 +19,6 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
       >
         <MarketingContent>{children}</MarketingContent>
         {/* <ContactSection /> */}
-        <NewsletterSection />
       </div>
       <Footer />
     </div>

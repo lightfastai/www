@@ -46,3 +46,29 @@
     width: min(calc(100vw - 12rem), 72rem);
   }
 }
+
+.marketing-content-bleed-full {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+}
+
+.blog-article-bleed {
+  position: relative;
+  left: 50%;
+  width: min(calc(100vw - 3rem), 64rem);
+  transform: translateX(-50%);
+}
+
+@media (min-width: 40rem) {
+  .blog-article-bleed {
+    width: min(calc(100vw - 5rem), 76rem);
+  }
+}
+
+@media (min-width: 80rem) {
+  .blog-article-bleed {
+    width: min(calc(100vw - 6rem), 96rem);
+  }
+}

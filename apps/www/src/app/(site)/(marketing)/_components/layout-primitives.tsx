@@ -8,6 +8,8 @@ export const marketingLayout = {
   content: "mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-32",
   contentBleed: "marketing-content-bleed",
   contentBleedWide: "marketing-content-bleed-wide",
+  contentBleedFull: "marketing-content-bleed-full",
+  articleBleed: "blog-article-bleed",
   edgeX: "px-6 sm:px-10 lg:px-8",
   pageTop: "pt-28 sm:pt-32 lg:pt-20",
 } as const;
@@ -35,6 +37,18 @@ export function MarketingContentBleedWide({
   return (
     <div
       className={cn(marketingLayout.contentBleedWide, className)}
+      {...props}
+    />
+  );
+}
+
+export function MarketingContentBleedFull({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<"div">) {
+  return (
+    <div
+      className={cn(marketingLayout.contentBleedFull, className)}
       {...props}
     />
   );
