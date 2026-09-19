@@ -2,7 +2,6 @@ import { JsonLd } from "@vendor/seo/json-ld";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { markdownComponents } from "~/app/_components/mdx-components";
 import {
   getBlogPostPublication,
   getBlogPostStaticParams,
@@ -11,6 +10,7 @@ import {
   MarketingContentBleed,
   marketingLayout,
 } from "../../_components/layout-primitives";
+import { blogMarkdownComponents } from "./_components/blog-markdown-components";
 import { Toc } from "./_components/toc";
 
 export const dynamic = "force-static";
@@ -97,7 +97,7 @@ export default async function BlogPostPage({ params }: Props) {
                   </p>
                 </aside>
               ) : null}
-              <MDXContent components={markdownComponents} />
+              <MDXContent components={blogMarkdownComponents} />
             </article>
           </div>
         </div>
