@@ -1,6 +1,7 @@
 import type { GraphContext } from "@vendor/seo/json-ld";
 import type { MDXContent } from "mdx/types";
 import type { Metadata } from "next";
+import { env } from "~/env";
 import { absoluteUrl } from "../site/identity";
 import {
   buildBlogIndexJsonLd,
@@ -101,6 +102,19 @@ function isPublic(data: { noindex: boolean }): boolean {
   return !data.noindex;
 }
 
+function isDraftEnvironmentSafe(): boolean {
+  const isExplicitPreview =
+    env.VERCEL_ENV === "preview" && env.NEXT_PUBLIC_VERCEL_ENV === "preview";
+  const isLocalDevelopment =
+    env.NODE_ENV === "development" && env.VERCEL_ENV === undefined;
+
+  return isExplicitPreview || isLocalDevelopment;
+}
+
+function isDraftHidden(data: BlogPostData): boolean {
+  return data.draft && !isDraftEnvironmentSafe();
+}
+
 function lastModified(data: {
   publishedAt?: string;
   reviewedAt?: string;
@@ -197,6 +211,7 @@ function buildBlogPostPublication(
   const url = absoluteUrl(pathname);
   const canonicalUrl = url;
   const modified = lastModified(data);
+  const effectiveData = data.draft ? { ...data, noindex: true } : data;
 
   return {
     kind: "blog-post",
@@ -214,10 +229,10 @@ function buildBlogPostPublication(
     url,
     canonicalUrl,
     lastModified: modified,
-    isPublic: isPublic(data),
+    isPublic: isPublic(effectiveData),
     nofollow: data.nofollow,
-    metadata: buildBlogPostMetadata(data, canonicalUrl),
-    jsonLd: buildBlogPostJsonLd(data, canonicalUrl),
+    metadata: buildBlogPostMetadata(effectiveData, canonicalUrl),
+    jsonLd: buildBlogPostJsonLd(effectiveData, canonicalUrl),
   } satisfies BlogPostPublication;
 }
 
@@ -312,7 +327,10 @@ export function getBlogPostPublication(
   slug: string
 ): BlogPostPublication | undefined {
   const document = getBlogDocument(slug);
-  return document ? buildBlogPostPublication(slug, document.data) : undefined;
+  if (!document || isDraftHidden(document.data)) {
+    return undefined;
+  }
+  return buildBlogPostPublication(slug, document.data);
 }
 
 export function getLegalPublication(
@@ -323,9 +341,11 @@ export function getLegalPublication(
 }
 
 export function getBlogPostStaticParams(): StaticParam[] {
-  return getBlogDocuments().map((document) => ({
-    slug: slugFrom(document.slugs),
-  }));
+  return getBlogDocuments()
+    .filter((document) => !isDraftHidden(document.data))
+    .map((document) => ({
+      slug: slugFrom(document.slugs),
+    }));
 }
 
 export function getLegalStaticParams(): StaticParam[] {
@@ -337,6 +357,7 @@ export function getLegalStaticParams(): StaticParam[] {
 export function getBlogPostPublications(): BlogPostPublication[] {
   return sortByPublishedAtDesc(
     getBlogDocuments()
+      .filter((document) => !isDraftHidden(document.data))
       .map((document) =>
         buildBlogPostPublication(slugFrom(document.slugs), document.data)
       )
