@@ -8,6 +8,7 @@ export const marketingLayout = {
   content: "mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-32",
   contentBleed: "marketing-content-bleed",
   contentBleedWide: "marketing-content-bleed-wide",
+  articleBleed: "blog-article-bleed",
   edgeX: "px-6 sm:px-10 lg:px-8",
   pageTop: "pt-28 sm:pt-32 lg:pt-20",
 } as const;

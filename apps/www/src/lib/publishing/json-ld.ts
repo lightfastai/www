@@ -39,7 +39,7 @@ interface BlogIndexJsonLdPost {
   url: string;
 }
 
-const ARTICLE_SECTIONS: Record<BlogPostData["category"], string> = {
+export const ARTICLE_SECTIONS: Record<BlogPostData["category"], string> = {
   engineering: "Engineering",
   product: "Product",
   company: "Company",

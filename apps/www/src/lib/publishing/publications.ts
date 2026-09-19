@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { env } from "~/env";
 import { absoluteUrl } from "../site/identity";
 import {
+  ARTICLE_SECTIONS,
   buildBlogIndexJsonLd,
   buildBlogPostJsonLd,
   buildContentPageJsonLd,
@@ -63,8 +64,11 @@ export interface LegalPublication extends ContentPublication<"legal"> {
 
 export interface BlogPostPublication extends ContentPublication<"blog-post"> {
   readonly answerSummary?: string;
+  readonly category: BlogPostData["category"];
+  readonly categoryLabel: string;
   readonly featuredImage?: string;
   readonly publishedAt: string;
+  readonly readingTimeMinutes: number;
   readonly slug: string;
   readonly tldr: string;
   readonly toc: BlogPostData["toc"];
@@ -219,9 +223,12 @@ function buildBlogPostPublication(
     description: data.description,
     answerSummary: data.answerSummary,
     body: data.body,
+    category: data.category,
+    categoryLabel: ARTICLE_SECTIONS[data.category],
     featuredImage: data.featuredImage,
     pathname,
     publishedAt: data.publishedAt,
+    readingTimeMinutes: data.readingTimeMinutes,
     slug,
     tldr: data.tldr,
     toc: data.toc,

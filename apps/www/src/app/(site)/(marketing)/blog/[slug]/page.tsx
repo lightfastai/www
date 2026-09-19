@@ -25,6 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return getBlogPostPublication(slug)?.metadata ?? {};
 }
 
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  day: "numeric",
+  month: "long",
+  timeZone: "UTC",
+  year: "numeric",
+});
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const publication = getBlogPostPublication(slug);
@@ -33,28 +40,46 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const MDXContent = publication.body;
-  const { answerSummary, description, featuredImage, tldr, title } =
-    publication;
+  const {
+    answerSummary,
+    categoryLabel,
+    description,
+    featuredImage,
+    publishedAt,
+    readingTimeMinutes,
+    tldr,
+    title,
+    toc,
+  } = publication;
+
+  const metaLine = [
+    dateFormatter.format(new Date(publishedAt)),
+    categoryLabel,
+    `${readingTimeMinutes} min read`,
+  ].join(" · ");
 
   return (
     <main className="bg-background text-foreground">
       <JsonLd code={publication.jsonLd} />
 
       <section className={`pb-12 md:pb-16 ${marketingLayout.pageTop}`}>
-        <div className="space-y-16">
-          <div className="space-y-4">
-            <h1 className="font-medium font-title text-3xl text-foreground tracking-normal lg:text-4xl">
+        <div className={marketingLayout.articleBleed}>
+          <div className="mx-auto flex w-full max-w-3xl flex-col items-center space-y-6 text-center">
+            <p className="font-mono text-muted-foreground text-xs uppercase tracking-widest">
+              {metaLine}
+            </p>
+            <h1 className="font-medium font-title text-4xl text-foreground tracking-normal lg:text-5xl">
               {title}
             </h1>
             {description && (
-              <p className="text-foreground text-md leading-relaxed">
+              <p className="max-w-2xl text-lg text-muted-foreground leading-relaxed">
                 {description}
               </p>
             )}
           </div>
 
           {featuredImage && (
-            <div className="w-full">
+            <div className="mt-14 w-full">
               <div className="relative aspect-video overflow-hidden rounded-lg bg-card">
                 <Image
                   alt={title}
@@ -71,35 +96,35 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           {tldr && (
-            <div className="w-full rounded-xs border bg-background p-8">
-              <h2 className="mb-4 font-mono font-semibold text-muted-foreground text-xs uppercase tracking-widest">
-                TL;DR
-              </h2>
-              <p className="text-foreground text-sm leading-relaxed">{tldr}</p>
+            <div className="mx-auto mt-14 max-w-[42rem] border-border border-l pl-5">
+              <h2 className="font-medium text-foreground text-sm">TL;DR</h2>
+              <p className="mt-3 text-muted-foreground text-sm leading-6">
+                {tldr}
+              </p>
             </div>
           )}
         </div>
       </section>
 
       <section className="pt-12 pb-24 md:pb-32">
-        <div className="grid grid-cols-1 gap-y-14 lg:grid-cols-12 lg:gap-x-6">
-          <aside className="hidden lg:col-span-4 lg:block">
-            <Toc items={publication.toc} />
-          </aside>
+        <div className={marketingLayout.articleBleed}>
+          <div className="relative mx-auto w-full max-w-[42rem]">
+            <Toc items={toc} />
 
-          <article className="max-w-none lg:col-span-7 lg:col-start-5">
-            {answerSummary ? (
-              <aside className="mb-10 border-border border-l pl-5">
-                <h2 className="font-medium text-foreground text-sm">
-                  Quick answer
-                </h2>
-                <p className="mt-3 text-muted-foreground text-sm leading-6">
-                  {answerSummary}
-                </p>
-              </aside>
-            ) : null}
-            <MDXContent components={markdownComponents} />
-          </article>
+            <article className="max-w-none">
+              {answerSummary ? (
+                <aside className="mb-10 border-border border-l pl-5">
+                  <h2 className="font-medium text-foreground text-sm">
+                    Quick answer
+                  </h2>
+                  <p className="mt-3 text-muted-foreground text-sm leading-6">
+                    {answerSummary}
+                  </p>
+                </aside>
+              ) : null}
+              <MDXContent components={markdownComponents} />
+            </article>
+          </div>
         </div>
       </section>
     </main>
